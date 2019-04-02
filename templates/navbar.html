@@ -1,0 +1,20 @@
+{% load static %}
+<nav>
+    <div class="nav-wrapper main-bg-color">
+        <div class="container">
+            <ul class="left">
+                <li class="text"><a href="/">Главная</a></li>
+            </ul>
+            <ul id="nav-mobile" class="right">
+            {% if user.is_authenticated %}
+                {% if user.is_superuser %}
+                    <li class="icon"><a href="/admin/"><i class="material-icons left">star</i></a></li>
+                {% endif %}
+                <li><a href="/account/">Личный кабинет</a></li>
+            {% else %}
+                <li><a href="/account/signin/">Вход</a></li>
+            {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}SmartHome: Регистрация{% endblock %}
+
+{% block stylesheet %}
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <form action="/account/signup/" method="post">
+                {% csrf_token %}
+                <div class="col s12 m10 offset-m1 l8 offset-l2 xl6 offset-xl3 signup z-depth-1">
+                    <h3 class="title center-align dark-text-color">Регистрация</h3>
+                    <div class="row">
+                        <div class="input-field col s5 offset-s1">
+                            <input id="first_name" name="first_name" type="text"
+                                   value="{{ form.first_name.value|default_if_none:"" }}">
+                            <label for="first_name">Имя</label>
+                            {% if form.first_name.errors %}
+                                <span class="helper-text error">{{ form.first_name.errors.0|safe }}</span>
+                            {% else %}
+                                <span class="helper-text">Не менее 2 символов</span>
+                            {% endif %}
+                        </div>
+                        <div class="input-field col s5">
+                            <input id="last_name" name="last_name" type="text"
+                                   value="{{ form.last_name.value|default_if_none:"" }}">
+                            <label for="last_name">Фамилия</label>
+                            {% if form.last_name.errors %}
+                                <span class="helper-text error">{{ form.first_name.errors.0|safe }}</span>
+                            {% else %}
+                                <span class="helper-text">Не менее 2 символов</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s10 offset-s1">
+                            <input id="email" name="email" type="email" class="validate"
+                                   value="{{ form.email.value|default_if_none:"" }}">
+                            <label for="email">Email</label>
+                            {% if form.email.errors %}
+                                <span class="helper-text error">{{ form.email.errors.0|safe }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s10 offset-s1">
+                            <input id="password" name="password" type="password"
+                                   value="{{ form.password.value|default_if_none:"" }}">
+                            <label for="password">Пароль</label>
+                            {% if form.password.errors %}
+                                <span class="helper-text error">{{ form.password.errors.0|safe }}</span>
+                            {% else %}
+                                <span class="helper-text">Не менее 8 символов</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s10 offset-s1">
+                            <input id="password_confirm" name="password_confirm" type="password"
+                                   value="{{ form.password_confirm.value|default_if_none:"" }}">
+                            <label for="password_confirm">Подтвердите пароль</label>
+                            {% if form.password_confirm.errors %}
+                                <span class="helper-text error">{{ form.password_confirm.errors.0|safe }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="button">
+                        <button class="btn waves-effect waves-light main-bg-color" type="submit" name="action">
+                            Зарегистрироваться
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+{% endblock %}

@@ -1,0 +1,49 @@
+.signup{
+  background: white;
+  margin-top: 15vh;
+
+  .title{
+    margin-bottom: 30px;
+  }
+  .row{
+    margin-bottom: 0;
+  }
+  .button{
+    margin-top: 15px;
+    height: 65px;
+    button{
+      position: absolute;
+      left:50%;
+      transform: translate(-50%, 0);
+    }
+  }
+  .input-field{
+    margin-top: 15px;
+    input{
+      margin-bottom: 2px;
+    }
+  }
+  .auth-btn{
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  span.error{
+    color: $red_color;
+  }
+}
+
+@media only screen and (max-width: $m_px){
+  .signup{
+    margin-top: 10vh;
+
+    .title{
+      margin-bottom: 15px;
+    }
+    .input-field{
+      margin-top: 10px;
+      input{
+        height: 36px;
+      }
+    }
+  }
+}

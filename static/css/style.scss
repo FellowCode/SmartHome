@@ -1,0 +1,43 @@
+$main_bg_color: #00acc1;
+$main_text_color: #ffffff;
+$dark_text_color: #4c4c4c;
+$red_color: #a80000;
+
+$m_px: 600px;
+$l_px: 992px;
+$xl_px: 1200px;
+
+@import "index";
+@import "signup";
+
+.no-padding{
+  padding: 0 !important;
+}
+.full-width{
+  width: 100%;
+}
+.main-text-color{
+  color: $main_text_color;
+}
+.dark-text-color{
+  color: $dark_text_color;
+}
+.main-bg-color{
+  background-color: $main_bg_color !important;
+  color: $main_text_color;
+}
+
+body{
+  background-image: url('/static/img/bg.jpg');
+  background-repeat: no-repeat;
+  background-size: auto 100vh;
+  background-position: center 0;
+}
+.container {
+    width: 90%;
+}
+@media only screen and (min-width: 1500px){
+    .container {
+        width: 1500px;
+    }
+}
