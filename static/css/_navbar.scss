@@ -1,0 +1,13 @@
+li.icon a{
+  height: 64px;
+}
+
+@media only screen and (max-width: $m_px) {
+  nav .container{
+    width: 100%;
+  }
+
+  li.icon a{
+    height: 58px;
+  }
+}

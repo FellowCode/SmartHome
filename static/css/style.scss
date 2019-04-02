@@ -9,6 +9,7 @@ $xl_px: 1200px;
 
 @import "index";
 @import "signup";
+@import "navbar";
 
 .no-padding{
   padding: 0 !important;
@@ -35,9 +36,5 @@ body{
 }
 .container {
     width: 90%;
-}
-@media only screen and (min-width: 1500px){
-    .container {
-        width: 1500px;
-    }
+    max-width: 1500px;
 }

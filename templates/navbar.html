@@ -8,9 +8,11 @@
             <ul id="nav-mobile" class="right">
             {% if user.is_authenticated %}
                 {% if user.is_superuser %}
-                    <li class="icon"><a href="/admin/"><i class="material-icons left">star</i></a></li>
+                    <li class="icon"><a href="/admin/"><i class="material-icons">star</i></a></li>
                 {% endif %}
                 <li><a href="/account/">Личный кабинет</a></li>
+                <li class="hide-on-small-only"><a href="/account/logout/">Выйти</a></li>
+                <li class="hide-on-med-and-up"><a href="/account/logout/"><i class="material-icons">exit_to_app</i></a></li>
             {% else %}
                 <li><a href="/account/signin/">Вход</a></li>
             {% endif %}
