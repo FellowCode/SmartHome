@@ -1,0 +1,4 @@
+ds1307 - https://www.hackster.io/adachsoft_com/esp8266-with-ds1307-rtc-nv-sram-and-square-wave-output-02ec9e
+dht22 - https://arduinomaster.ru/datchiki-arduino/datchiki-temperatury-i-vlazhnosti-dht11-dht22/
+tft - https://www.youtube.com/watch?v=68dEen6643k
+EEPROM - http://arduino.ru/forum/programmirovanie/zapis-i-chtenie-eeprom-peremennykh-tipa-float-unsigned-long-long-unsigned-int

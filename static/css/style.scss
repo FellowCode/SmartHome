@@ -10,6 +10,7 @@ $xl_px: 1200px;
 @import "index";
 @import "signup";
 @import "navbar";
+@import "user_account";
 
 .no-padding{
   padding: 0 !important;
@@ -27,7 +28,9 @@ $xl_px: 1200px;
   background-color: $main_bg_color !important;
   color: $main_text_color;
 }
-
+.col{
+  background-color: white;
+}
 body{
   background-image: url('/static/img/bg.jpg');
   background-repeat: no-repeat;
