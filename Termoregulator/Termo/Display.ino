@@ -42,8 +42,8 @@ extern const unsigned char PROGMEM WiFiIcon [];
 #define SETTINGS_COUNT  8
 const char settings[SETTINGS_COUNT][16] = {"Date", "Time", "Display (sec)", "Hysteresis", "Watts", "Reset watts", "WiFi setup", "Reset params"};
 
-#define WIFI_SETTINGS_COUNT 4
-const char WiFiSettings[WIFI_SETTINGS_COUNT][16] = {"Wi-Fi Hotspot", "Wi-Fi Client", "SSID", "Password"};
+#define WIFI_SETTINGS_COUNT 5
+const char WiFiSettings[WIFI_SETTINGS_COUNT][16] = {"Wi-Fi Hotspot", "Wi-Fi Client", "SSID", "Password", "IP"};
 
 //***************//
 //MAIN
@@ -231,8 +231,13 @@ void tftUpdateSettings()
     tftDrawSettingsParam(0);
   if(currentTime != getTime())
     tftDrawSettingsParam(1);
-  if(currentWiFiOn != WiFiOn || currentApIsCreated != ApIsCreated)
+  if(currentWiFiOn != WiFiOn || currentApIsCreated != ApIsCreated || currentClientIsConnected != clientIsConnected)
+  {
+    for (int i=0; i< WIFI_SETTINGS_COUNT; i++)
+      tftDrawWiFiParam(i);
     tftDrawWiFi();
+  }
+    
 }
 void tftSettingsChanged()
 {
@@ -280,7 +285,7 @@ void tftBlinkParam()
 void tftDrawSettingSelect()                          //Рамка вокруг выбранного элемента
 {
   if((settingSelect == SETTINGS_COUNT && nSheet == SETTINGS)||                    //Вернуть выбор в начало при превышении элементов списка для страницы настроек
-     (settingSelect == WIFI_SETTINGS_COUNT-2 && nSheet == WiFiSetupSheet))        //Вернуть выбор в начало при превышении элементов списка для страницы вай фай настроек
+     (settingSelect == 2 && nSheet == WiFiSetupSheet))        //Вернуть выбор в начало при превышении элементов списка для страницы вай фай настроек
   {
     settingSelect = 0;
     tft.drawRect(0, TFT_PARAM_MARGIN - 3 + (SETTINGS_COUNT-1)*TFT_PARAM_INTERVAL, 128, TFT_PARAM_INTERVAL - 1, BG_VALUES_COLOR);
@@ -294,7 +299,7 @@ void tftDrawSettingSelect()                          //Рамка вокруг �
     if(settingSelect > 0)                                                         //Скрыть рамку сверху выбранного элемента
       tft.drawRect(0, TFT_PARAM_MARGIN - 3 + (settingSelect - 1)*TFT_PARAM_INTERVAL, 128, TFT_PARAM_INTERVAL - 1, BG_VALUES_COLOR);
     if((settingSelect < SETTINGS_COUNT - 1 && nSheet == SETTINGS)||               //Скрыть рамку снизу выбранного элемента (страница настроек)
-      (settingSelect < WIFI_SETTINGS_COUNT - 3 && nSheet == WiFiSetupSheet))      //Скрыть рамку снизу выбранного элемента (страница вай фай настроек)               
+      (settingSelect < WIFI_SETTINGS_COUNT - 1 && nSheet == WiFiSetupSheet))      //Скрыть рамку снизу выбранного элемента (страница вай фай настроек)               
       tft.drawRect(0, TFT_PARAM_MARGIN - 3 + (settingSelect + 1)*TFT_PARAM_INTERVAL, 128, TFT_PARAM_INTERVAL - 1, BG_VALUES_COLOR);
     tft.drawRect(0, TFT_PARAM_MARGIN - 3 + settingSelect*TFT_PARAM_INTERVAL, 128, TFT_PARAM_INTERVAL - 1, SETTING_SELECT_COLOR);
   }
@@ -525,8 +530,9 @@ String getWiFiParam(int index)
   switch(index){
     case WiFiHotspot: if(ApIsCreated) param = "On"; else param = "Off"; break;
     case WiFiClient: if(WiFiOn && !ApIsCreated) if(clientIsConnected) param = "On"; else param = "..."; else param = "Off"; break;
-    case SSID: if(ApIsCreated) param = base_ssid; else if(clientIsConnected) param = clientSSID; else param = "              "; break;
-    case Password: if(ApIsCreated) param = base_password; else if(clientIsConnected) param = clientPassword; else param = "          "; break; 
+    case SSID: if(ApIsCreated) param = base_ssid; else if(clientOn) param = clientSSID; else param = "              "; break;
+    case Password: if(ApIsCreated) param = base_password; else if(clientOn) param = clientPassword; else param = "          "; break;
+    case IP: if(ApIsCreated) param = IpAddress2String(apIP); else if(clientIsConnected) param = IpAddress2String(localIP); else param = "                "; break;
   }
   return param;
 }

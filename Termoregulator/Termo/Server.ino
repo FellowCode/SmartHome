@@ -4,19 +4,12 @@
 
 unsigned long int serverTimer = 0;
 
-void CreateAP()
-{
-  WiFiOn = true;
-  //WiFi.mode(WIFI_AP);
-  delay(300);
-  WiFi.softAPConfig(apIP, apIP, IPAddress(255,255,255,0));
-  //WiFi.config(apIP,routerIP,IPAddress(255,255,255,0),routerIP);
-  ApIsCreated = WiFi.softAP(base_ssid, base_password);
-  handleSetup();
-  server.begin();
-  IPAddress myIP = WiFi.softAPIP(); //Get IP address
-  Serial.print("HotSpt IP:");
-  Serial.println(myIP);
+void CreateServer(){
+   handleSetup();
+   server.begin();
+}
+void StopServer(){
+  server.stop();
 }
 void handleSetup()
 {
@@ -125,11 +118,4 @@ void checkRequest() {
     server.handleClient();
   }
   
-}
-void StopAP()
-{
-  WiFi.mode(WIFI_OFF);
-  WiFiOn = false;
-  ApIsCreated = false;
-  Serial.println("server stoped");
 }

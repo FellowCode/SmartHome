@@ -30,7 +30,7 @@ Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS,  TFT_DC);
 
 enum {MAIN, SETTINGS, STATISTIC};    //Sheets
 enum {Date, Time, Display, Hysteresis, Watts, ResetWatts, WiFiSetup, ResetParams};
-enum {WiFiHotspot, WiFiClient, SSID, Password};
+enum {WiFiHotspot, WiFiClient, SSID, Password, IP};
 
 const byte sheetCount = 3;
 bool isActive = false;
@@ -57,10 +57,12 @@ String SitePassword = "";
 
 bool WiFiOn = false;
 bool ApIsCreated = false;
+bool clientOn = false;
 bool clientIsConnected = false;
 
 ESP8266WebServer server(80);
 IPAddress apIP(192, 168, 0, 150);
+IPAddress localIP(192, 168, 0, 150);
 IPAddress routerIP(192,168,0,1);
 ////***ADDRESS****/////
 

@@ -14,7 +14,7 @@ void SaveString(int addr, String buffer) {
 String LoadString(int addr) {
   String buffer;
   for (int L = addr; L < addr+STRING_BYTES; L++)
-    if (isAlphaNumeric(EEPROM.read(L)))
+    if (isAscii(EEPROM.read(L)))
       buffer += char(EEPROM.read(L));
   return buffer.c_str();
 }
@@ -92,4 +92,3 @@ void LoadStatistic(int addr)
   for(int i=0; i<7; i++)
     statistic[i] = LoadFloat(addr + i*4);
 }
-

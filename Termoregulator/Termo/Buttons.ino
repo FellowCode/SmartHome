@@ -171,5 +171,6 @@ void BtnSetWiFiSetup()
   tftDrawWiFiParam(WiFiClient);
   tftDrawWiFiParam(SSID);
   tftDrawWiFiParam(Password);
+  tftDrawWiFiParam(IP);
   tftDrawWiFi();
 }
