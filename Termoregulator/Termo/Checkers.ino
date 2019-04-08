@@ -3,7 +3,7 @@
 ///**************************///////
 
 #define SETTING_PARAM_BLINK_DELAY    100        //millis
-#define BTN_CHECKER                  3          //cycles
+#define BTN_CHECKER                  10          //cycles
 #define BTN_DELAY 400           //Время удержания кнопки (мсек)
 #define BTN_LONG_DELAY 50       //Период вызова функции удержания (мсек)
 
@@ -19,6 +19,7 @@
 
 unsigned long settingBlinkTimer = 0;
 byte btnChecker = 0;
+int btnCheckerSum = 0;
 long releTimer;
 long activeTimer;
 
@@ -65,6 +66,8 @@ void checkActive()                                              //Проверк
 }
 void checkTemp()
 {
+  if (needTempChanged)
+    changeWebTargetTemp = true;
   if(!isWork && ((needTemp - hysteresis > temp && !needTempChanged)||(needTemp > temp && needTempChanged)))     //Гистерезис применяется только если необходимая температура не была изменена
   {            
     digitalWrite(RELE_PIN, HIGH);                                                   //Включение реле
@@ -105,10 +108,14 @@ void checkBtn()
     {
       if(!btn)
       {
-        if(btnChecker < BTN_CHECKER)
+        if(btnChecker < BTN_CHECKER){
           btnChecker++;
+          btnCheckerSum += param;
+        }
         else
         {
+          //Какая кнопка нажата определяется по среднему арифметическому
+          param = btnCheckerSum / btnChecker;
           btnTimer = millis() + BTN_DELAY;
           btn = true;
           if(param < 890)
@@ -140,6 +147,7 @@ void checkBtn()
     if(btn)
       BtnReleased();
     btnChecker = 0;
+    btnCheckerSum = 0;
     btn = false;
   }
 }

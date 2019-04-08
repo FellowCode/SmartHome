@@ -11,9 +11,22 @@ void SaveString(int addr, String buffer) {
   }
   EEPROM.commit();
 }
+void SaveString36(int addr, String buffer) {
+  for (int L = 0; L < 36; L++) {
+    EEPROM.write(addr + L, buffer[L]);
+  }
+  EEPROM.commit();
+}
 String LoadString(int addr) {
   String buffer;
   for (int L = addr; L < addr+STRING_BYTES; L++)
+    if (isAscii(EEPROM.read(L)))
+      buffer += char(EEPROM.read(L));
+  return buffer.c_str();
+}
+String LoadString36(int addr) {
+  String buffer;
+  for (int L = addr; L < addr+36; L++)
     if (isAscii(EEPROM.read(L)))
       buffer += char(EEPROM.read(L));
   return buffer.c_str();

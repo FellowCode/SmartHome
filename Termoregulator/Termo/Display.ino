@@ -103,6 +103,7 @@ void tftUpdateData()
   switch(nSheet){
     case MAIN: tftUpdateMain(); break;
     case SETTINGS: tftUpdateSettings(); break;
+    case WiFiSetupSheet: tftUpdateWiFiSettings(); break;
   }
 }
 void tftDrawMain()
@@ -233,8 +234,6 @@ void tftUpdateSettings()
     tftDrawSettingsParam(1);
   if(currentWiFiOn != WiFiOn || currentApIsCreated != ApIsCreated || currentClientIsConnected != clientIsConnected)
   {
-    for (int i=0; i< WIFI_SETTINGS_COUNT; i++)
-      tftDrawWiFiParam(i);
     tftDrawWiFi();
   }
     
@@ -518,6 +517,16 @@ void tftDrawWiFiSetup()
     tftDrawWiFiParam(i);
   }
 }
+void tftUpdateWiFiSettings(){
+  if (currentWiFiOn != WiFiOn || currentApIsCreated != ApIsCreated || currentClientIsConnected != clientIsConnected){
+    currentWiFiOn = WiFiOn;
+    currentApIsCreated = ApIsCreated;
+    currentClientIsConnected = clientIsConnected;
+    tftDrawWiFi();
+    for (int i=0; i< WIFI_SETTINGS_COUNT; i++)
+      tftDrawWiFiParam(i);
+  }
+}
 void tftDrawWiFiParam(int index)
 {
   String param = getWiFiParam(index);
@@ -530,8 +539,8 @@ String getWiFiParam(int index)
   switch(index){
     case WiFiHotspot: if(ApIsCreated) param = "On"; else param = "Off"; break;
     case WiFiClient: if(WiFiOn && !ApIsCreated) if(clientIsConnected) param = "On"; else param = "..."; else param = "Off"; break;
-    case SSID: if(ApIsCreated) param = base_ssid; else if(clientOn) param = clientSSID; else param = "              "; break;
-    case Password: if(ApIsCreated) param = base_password; else if(clientOn) param = clientPassword; else param = "          "; break;
+    case SSID: if(ApIsCreated) param = ap_ssid; else if(clientOn) param = clientSSID; else param = "              "; break;
+    case Password: if(ApIsCreated) param = ap_password; else if(clientOn) param = clientPassword; else param = "          "; break;
     case IP: if(ApIsCreated) param = IpAddress2String(apIP); else if(clientIsConnected) param = IpAddress2String(localIP); else param = "                "; break;
   }
   return param;

@@ -48,8 +48,8 @@ void handleSendSettingsData()
   message += "watts="+String(watts) + ";";
   message += "WiFiSSID="+clientSSID + ";";
   message += "WiFiPassword="+clientPassword + ";";
-  message += "AccountLogin="+SiteLogin + ";";
-  message += "AccountPassword="+SitePassword + ";"; 
+  message += "AccountLogin="+AccountLogin + ";";
+  message += "AccountPassword="+AccountPassword + ";"; 
 
   server.send(200, "text/html", message);
 }
@@ -68,6 +68,9 @@ void handleSetSettingsData()
   }
   Serial.println(message);*/
   for (int i=0; i<server.args(); i++){
+    Serial.print(server.argName(i));
+    Serial.print(" = " + server.arg(i));
+    Serial.println();
     String key = server.argName(i);
      if (key == "tftActiveTime")
       tftActiveTime = server.arg(i).toInt();
@@ -80,9 +83,9 @@ void handleSetSettingsData()
      else if (key == "WiFiPassword")
       clientPassword = server.arg(i);
      else if (key == "AccountLogin")
-      SiteLogin = server.arg(i);
+      AccountLogin = server.arg(i);
      else if (key == "AccountPassword")
-      SitePassword = server.arg(i);
+      AccountPassword = server.arg(i);
      else if (key == "date")
       setDate(server.arg(i));
      else if (key == "time")
@@ -111,7 +114,7 @@ void hundleResetParams()
 //////////////////////////
 //////////////////////////
 void checkRequest() {
-  if(!ApIsCreated)
+  if(!ApIsCreated && !clientIsConnected)
     return;
   if (serverTimer + HANDLE_DELAY < millis()){
     serverTimer = millis();

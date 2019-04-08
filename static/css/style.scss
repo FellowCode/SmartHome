@@ -28,6 +28,9 @@ $xl_px: 1200px;
   background-color: $main_bg_color !important;
   color: $main_text_color;
 }
+.transparent-bg{
+  background-color: rgba(0,0,0,0) !important;
+}
 .col{
   background-color: white;
 }

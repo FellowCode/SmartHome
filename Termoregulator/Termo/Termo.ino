@@ -6,9 +6,11 @@
 #include <EEPROM.h>
 #include <TimeLib.h>
 #include <ESP8266WiFi.h>
+#include <ESP8266WiFiMulti.h>
 #include <ESP8266WebServer.h>
+#include <ESP8266HTTPClient.h>
 
-#define LOOP_DELAY  10
+#define LOOP_DELAY  5
 unsigned long loopTimer;
 //////*******************///////////
 
@@ -48,17 +50,24 @@ float min_v = 3.1, max_v = 4.2;
 int procBattery;
 
 ////***Wi-Fi***////////
-const char* base_ssid = "TermoR00v01";//"TermoR00v01";
-const char* base_password = "12345678";
+const char* ap_ssid = "TermoR00v01";//"TermoR00v01";
+const char* ap_password = "12345678";
 String clientSSID = "";
 String clientPassword = "";
-String SiteLogin = "";
-String SitePassword = "";
 
 bool WiFiOn = false;
 bool ApIsCreated = false;
 bool clientOn = false;
 bool clientIsConnected = false;
+
+////**** Http ****//////////
+String AccountLogin = "";
+String AccountPassword = "";
+String UniqueId = "";
+String webServerUrl = "http://192.168.0.102:8000/";
+String deviceModelName = "TermoController-battery v1.0";
+bool changeWebTargetTemp = false;
+
 
 ESP8266WebServer server(80);
 IPAddress apIP(192, 168, 0, 150);
@@ -77,6 +86,7 @@ IPAddress routerIP(192,168,0,1);
 #define A_PASSWORD       82          // 32 byte
 #define A_LOGIN          114
 #define A_SITE_PASSWORD  146
+#define A_UNIQUE_ID      178         // 36 byte
 
 ////***DEFAULT PARAMS****////
 
@@ -105,7 +115,7 @@ const char* deviceName = "Termo_R.00";
 
 void setup() {
   EEPROM.begin(512);
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(5, OUTPUT);
   digitalWrite(5, HIGH);
   //setTime(0, 0, 0, 1, 1, 2018);
@@ -131,6 +141,7 @@ void loop()
       return;
     loopTimer = millis();
   }
+  HttpLoop();
   checkSettingBlink();
   checkBattery();
   dhtGetData();
@@ -191,8 +202,9 @@ void LoadParams()
   LoadStatistic(A_STATISTIC);
   clientSSID = LoadString(A_SSID);
   clientPassword = LoadString(A_PASSWORD);
-  SiteLogin = LoadString(A_LOGIN);
-  SitePassword = LoadString(A_SITE_PASSWORD);
+  AccountLogin = LoadString(A_LOGIN);
+  AccountPassword = LoadString(A_SITE_PASSWORD);
+  UniqueId = LoadString36(A_UNIQUE_ID);
 }
 void resetParams()
 {
@@ -212,8 +224,9 @@ void SaveParams()
   SaveFloat(A_HYSTERESIS, hysteresis);
   SaveString(A_SSID, clientSSID);
   SaveString(A_PASSWORD, clientPassword);
-  SaveString(A_LOGIN, SiteLogin);
-  SaveString(A_SITE_PASSWORD, SitePassword);
+  SaveString(A_LOGIN, AccountLogin);
+  SaveString(A_SITE_PASSWORD, AccountPassword);
+  SaveString36(A_UNIQUE_ID, UniqueId);
 }
 void btnSetup()
 {

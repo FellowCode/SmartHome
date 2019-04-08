@@ -1,11 +1,17 @@
 #define CONNECT_CHECK_DELAY   500
+#define RECONNECT_DELAY 30 //sec
+
 unsigned long connectTimer = 0;
+unsigned long reconnectTimer = 0;
 int connectionCounter = 0;
 
 char clSSID[32];
 char clPassword[32];
 
+const char* ssid = "Wi-Fi Yota";
+const char* password = "01544424";
 
+ESP8266WiFiMulti WiFiMulti;
 
 void CreateAP()
 {
@@ -13,7 +19,7 @@ void CreateAP()
   //WiFi.mode(WIFI_AP);
   WiFi.softAPConfig(apIP, apIP, IPAddress(255,255,255,0));
   //WiFi.config(apIP,routerIP,IPAddress(255,255,255,0),routerIP);
-  ApIsCreated = WiFi.softAP(base_ssid, base_password);
+  ApIsCreated = WiFi.softAP(ap_ssid, ap_password);
   IPAddress myIP = WiFi.softAPIP(); //Get IP address
   Serial.print("HotSpt IP:");
   Serial.println(myIP);
@@ -29,17 +35,47 @@ void StopAP()
 }
 void WiFiConnect()
 {
+   /*Serial.println("scan start");
+
+  // WiFi.scanNetworks will return the number of networks found
+  int n = WiFi.scanNetworks();
+  Serial.println("scan done");
+  if (n == 0) {
+    Serial.println("no networks found");
+  } else {
+    Serial.print(n);
+    Serial.println(" networks found");
+    for (int i = 0; i < n; ++i) {
+      // Print SSID and RSSI for each network found
+      Serial.print(i + 1);
+      Serial.print(": ");
+      Serial.print(WiFi.SSID(i));
+      Serial.print(" (");
+      Serial.print(WiFi.RSSI(i));
+      Serial.print(")");
+      Serial.println((WiFi.encryptionType(i) == ENC_TYPE_NONE) ? " " : "*");
+      delay(10);
+    }
+  }
+  Serial.println("");*/
   WiFiOn = true;
   clientOn = true;
   clientIsConnected = false;
-  //WiFi.mode(WIFI_STA);
+  WiFi.mode(WIFI_STA);
   /*serverIsCreated = WiFi.softAP(base_ssid, base_password);
    delay(100);*/
-  clientSSID.toCharArray(clSSID,32);
-  clientPassword.toCharArray(clPassword,32);
-  Serial.println("SSID: "+ clientSSID);
-  Serial.println("Password: " + clientPassword);
-  WiFi.begin(clSSID, clPassword);
+  //WiFi.disconnect(true);
+  //WiFi.setAutoConnect(false);
+  //WiFi.setPhyMode(WIFI_PHY_MODE_11G);
+  
+  //Serial.println(WiFi.getPhyMode());
+  Serial.println("SSID: "+ String(clientSSID));
+  Serial.println("Password: " + String(clientPassword));
+  WiFiMulti = ESP8266WiFiMulti();
+  WiFiMulti.addAP(clientSSID.c_str(), clientPassword.c_str());
+  //WiFi.begin(ssid, password);
+  //WiFi.printDiag(Serial);
+  
 }
 void WiFiDisconnect()
 {
@@ -50,17 +86,23 @@ void WiFiDisconnect()
   WiFiOn = false;
   clientOn = false;
   clientIsConnected = false;
+  tftUpdateData();
 }
 void WiFiClientLoop()
 {
   if (!clientOn)
     return;
-  if (WiFi.status() != WL_CONNECTED && connectTimer + CONNECT_CHECK_DELAY < millis()){
+  if (WiFiMulti.run() != WL_CONNECTED && clientOn && clientIsConnected && reconnectTimer + RECONNECT_DELAY*1000 < millis()){
+    reconnectTimer = millis();
+    WiFiDisconnect();
+    WiFiConnect();
+  }
+  if (WiFiMulti.run() != WL_CONNECTED && connectTimer + CONNECT_CHECK_DELAY < millis()){
     connectTimer = millis();
     Serial.print("*");
     return;
   }
-  if (WiFi.status() != WL_CONNECTED)
+  if (WiFiMulti.run() != WL_CONNECTED)
     return;
   if (!clientIsConnected){
     localIP = WiFi.localIP();
@@ -69,6 +111,7 @@ void WiFiClientLoop()
     clientIsConnected = true;
     CreateServer();
     tftUpdateData();
+    
     return;
   }
 }
