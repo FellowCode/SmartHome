@@ -37,6 +37,7 @@ extern const unsigned char PROGMEM Termometr [];
 extern const unsigned char PROGMEM Steam [];
 extern const unsigned char PROGMEM Lightning [];
 extern const unsigned char PROGMEM WiFiIcon [];
+extern const unsigned char PROGMEM ErrorIcon [];
 
 
 #define SETTINGS_COUNT  8
@@ -77,6 +78,7 @@ byte currentSheet = -1;
 String currentTime = "";
 int currentBattery = 0;
 bool currentWiFiOn = false;
+bool currentError = false;
 bool currentApIsCreated = false;
 bool currentClientIsConnected = false;
 
@@ -111,6 +113,7 @@ void tftDrawMain()
   tft.fillScreen(BG_COLOR);
   tftDrawTime();
   tftDrawWiFi();
+  tftDrawError();
   tftDrawBattery();
   tftDrawTemp();
   tftDrawNeedTemp();
@@ -123,6 +126,8 @@ void tftUpdateMain()
     tftDrawTime();
   if(currentWiFiOn != WiFiOn || currentApIsCreated != ApIsCreated || currentClientIsConnected != clientIsConnected)
     tftDrawWiFi();
+  if(Error != currentError)
+    tftDrawError();
   if(procBattery != currentBattery)
     tftDrawBattery();
   if(temp != currentTemp || currentIsWork != isWork)
@@ -204,6 +209,7 @@ void tftDrawSettings()
   tft.fillScreen(BG_COLOR);
   currentTime = "";
   tftDrawWiFi();
+  tftDrawError();
   tftDrawBattery();
   tft.setCursor(3, 0);
   tft.setTextSize(1);
@@ -236,7 +242,8 @@ void tftUpdateSettings()
   {
     tftDrawWiFi();
   }
-    
+  if(Error != currentError)
+    tftDrawError();  
 }
 void tftSettingsChanged()
 {
@@ -420,6 +427,7 @@ void tftDrawStatistic()
   tft.fillScreen(BG_COLOR);
   tftDrawTime();
   tftDrawWiFi();
+  tftDrawError();
   tftDrawBattery();
   tftDrawCoordinateAxis();
   tftDrawStatisticValue();
@@ -507,6 +515,7 @@ void tftDrawWiFiSetup()
   tft.fillScreen(BG_COLOR);
   tftDrawTime();
   tftDrawWiFi();
+  tftDrawError();
   tftDrawBattery();
   tft.setTextSize(1);
   tft.setTextColor(MAIN_TEXT_COLOR);
@@ -526,6 +535,8 @@ void tftUpdateWiFiSettings(){
     for (int i=0; i< WIFI_SETTINGS_COUNT; i++)
       tftDrawWiFiParam(i);
   }
+  if(Error != currentError)
+    tftDrawError();  
 }
 void tftDrawWiFiParam(int index)
 {
@@ -597,4 +608,12 @@ void tftDrawWiFi()
     tft.drawBitmap(90, 0, WiFiIcon, 10, 8, ST7735_GREEN);
   else 
     tft.drawBitmap(90, 0, WiFiIcon, 10, 8, ST7735_RED);
+}
+void tftDrawError()
+{
+  currentError = Error;
+  if(!Error)
+    tft.fillRect(78,0,9,8, BG_VALUES_COLOR);
+  else
+    tft.drawBitmap(80, 0, ErrorIcon, 9, 8, ST7735_RED);
 }

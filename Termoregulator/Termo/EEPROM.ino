@@ -31,6 +31,13 @@ String LoadString36(int addr) {
       buffer += char(EEPROM.read(L));
   return buffer.c_str();
 }
+void SaveByte(int addr, byte val){
+  EEPROM.write(addr, val);
+  EEPROM.commit();
+}
+byte LoadByte(int addr){
+  return EEPROM.read(addr);
+}
 void SaveFloat(int addr, float val)
 {
   byte raw[4];

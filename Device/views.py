@@ -40,6 +40,7 @@ def set_data(request):
                 answer += ';'.join(l)
             print(answer)
         return render(request, 'device_data.html', {'data': answer})
+    print('not post')
     return HttpResponse(status=404)
 
 

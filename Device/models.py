@@ -11,6 +11,8 @@ class Termocontroller(models.Model):
 
     model_name = models.ForeignKey('TermocontrollerName', on_delete=models.PROTECT, blank=True, null=True)
 
+    custom_name = models.CharField(max_length=100, blank=True, null=True)
+
     temp = models.DecimalField(max_digits=4, decimal_places=1, null=True, blank=True)
     target_temp = models.DecimalField(max_digits=4, decimal_places=1, null=True, blank=True)
 

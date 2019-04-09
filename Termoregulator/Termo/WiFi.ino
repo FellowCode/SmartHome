@@ -1,5 +1,4 @@
-#define CONNECT_CHECK_DELAY   500
-#define RECONNECT_DELAY 30 //sec
+#define CONNECT_CHECK_DELAY   30 // Ожидание подключения
 
 unsigned long connectTimer = 0;
 unsigned long reconnectTimer = 0;
@@ -75,6 +74,8 @@ void WiFiConnect()
   WiFiMulti.addAP(clientSSID.c_str(), clientPassword.c_str());
   //WiFi.begin(ssid, password);
   //WiFi.printDiag(Serial);
+  connectTimer = millis();
+  SaveParams();
   
 }
 void WiFiDisconnect()
@@ -92,14 +93,8 @@ void WiFiClientLoop()
 {
   if (!clientOn)
     return;
-  if (WiFiMulti.run() != WL_CONNECTED && clientOn && clientIsConnected && reconnectTimer + RECONNECT_DELAY*1000 < millis()){
-    reconnectTimer = millis();
-    WiFiDisconnect();
-    WiFiConnect();
-  }
-  if (WiFiMulti.run() != WL_CONNECTED && connectTimer + CONNECT_CHECK_DELAY < millis()){
-    connectTimer = millis();
-    Serial.print("*");
+  if (WiFiMulti.run() != WL_CONNECTED && connectTimer + CONNECT_CHECK_DELAY*1000 < millis()){
+    ESP.restart();
     return;
   }
   if (WiFiMulti.run() != WL_CONNECTED)

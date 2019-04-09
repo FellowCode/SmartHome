@@ -1,4 +1,4 @@
-#define SEND_REQUEST_DELAY  10 //sec
+#define SEND_REQUEST_DELAY  30 //sec
 
 unsigned long int httpTimer = 0;
 
@@ -67,8 +67,11 @@ void SendWebRequest(){
     String payload = http.getString();    //Get the response payload
 
     Split(payload, ':');
-    
-    if (split[0] == "Change configuration"){
+    if (split[0] == "Auth Error"){
+      Error = true;
+      tftUpdateData();
+    }
+    else if (split[0] == "Change configuration"){
       while(split[1].length() > 0){
         Split(split[1], ';');
         //Временное хранение оставшихся полей
@@ -85,7 +88,13 @@ void SendWebRequest(){
           UniqueId = value;
         split[1] = tmp;
      }
+     Error = false;
+     tftUpdateData();
      SaveParams();
     }
+  }
+  else{
+    Error = true;
+    tftUpdateData();
   }
 }

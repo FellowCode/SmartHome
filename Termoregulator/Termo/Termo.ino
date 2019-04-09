@@ -9,6 +9,7 @@
 #include <ESP8266WiFiMulti.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPClient.h>
+#include <asyncHTTPrequest.h>
 
 #define LOOP_DELAY  5
 unsigned long loopTimer;
@@ -67,6 +68,7 @@ String UniqueId = "";
 String webServerUrl = "http://192.168.0.102:8000/";
 String deviceModelName = "TermoController-battery v1.0";
 bool changeWebTargetTemp = false;
+bool Error = false;
 
 
 ESP8266WebServer server(80);
@@ -87,6 +89,7 @@ IPAddress routerIP(192,168,0,1);
 #define A_LOGIN          114
 #define A_SITE_PASSWORD  146
 #define A_UNIQUE_ID      178         // 36 byte
+#define A_WIFI_STATUS    214         // 1 byte
 
 ////***DEFAULT PARAMS****////
 
@@ -131,6 +134,9 @@ void setup() {
   //SaveParams();
   //SaveStatistic(A_STATISTIC);
   LoadParams();
+  if (WiFiOn){
+    WiFiConnect();
+  }
 }
 void loop()
 {
@@ -205,6 +211,7 @@ void LoadParams()
   AccountLogin = LoadString(A_LOGIN);
   AccountPassword = LoadString(A_SITE_PASSWORD);
   UniqueId = LoadString36(A_UNIQUE_ID);
+  WiFiOn = LoadByte(A_WIFI_STATUS) == 1;
 }
 void resetParams()
 {
@@ -227,6 +234,7 @@ void SaveParams()
   SaveString(A_LOGIN, AccountLogin);
   SaveString(A_SITE_PASSWORD, AccountPassword);
   SaveString36(A_UNIQUE_ID, UniqueId);
+  SaveByte(A_WIFI_STATUS, byte(WiFiOn && clientOn));
 }
 void btnSetup()
 {

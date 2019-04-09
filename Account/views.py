@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import *
 from django.contrib.auth.models import User
+from Device.models import Termocontroller
 from django.contrib.auth import authenticate, login, logout
 
 
@@ -41,6 +42,7 @@ def user_logout(request):
 
 def user_account(request):
     user = request.user
-    if user.is_authenticated:
-        return render(request, 'Account/UserAccount.html')
+    if user and user.is_authenticated:
+        device_list = Termocontroller.objects.filter(user=user)
+        return render(request, 'Account/UserAccount.html', {'device_list': device_list})
     return redirect('/')
