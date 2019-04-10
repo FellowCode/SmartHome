@@ -95,7 +95,6 @@ void WiFiClientLoop()
     return;
   if (WiFiMulti.run() != WL_CONNECTED && connectTimer + CONNECT_CHECK_DELAY*1000 < millis()){
     ESP.restart();
-    return;
   }
   if (WiFiMulti.run() != WL_CONNECTED)
     return;

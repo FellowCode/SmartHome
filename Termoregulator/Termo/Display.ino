@@ -548,8 +548,8 @@ String getWiFiParam(int index)
 {
   String param = "";
   switch(index){
-    case WiFiHotspot: if(ApIsCreated) param = "On"; else param = "Off"; break;
-    case WiFiClient: if(WiFiOn && !ApIsCreated) if(clientIsConnected) param = "On"; else param = "..."; else param = "Off"; break;
+    case WiFi_HOTSPOT: if(ApIsCreated) param = "On"; else param = "Off"; break;
+    case WiFi_CLIENT: if(WiFiOn && !ApIsCreated) if(clientIsConnected) param = "On"; else param = "..."; else param = "Off"; break;
     case SSID: if(ApIsCreated) param = ap_ssid; else if(clientOn) param = clientSSID; else param = "              "; break;
     case Password: if(ApIsCreated) param = ap_password; else if(clientOn) param = clientPassword; else param = "          "; break;
     case IP: if(ApIsCreated) param = IpAddress2String(apIP); else if(clientIsConnected) param = IpAddress2String(localIP); else param = "                "; break;
@@ -615,5 +615,5 @@ void tftDrawError()
   if(!Error)
     tft.fillRect(78,0,9,8, BG_VALUES_COLOR);
   else
-    tft.drawBitmap(80, 0, ErrorIcon, 9, 8, ST7735_RED);
+    tft.drawBitmap(78, 0, ErrorIcon, 9, 8, ST7735_RED);
 }

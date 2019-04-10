@@ -25,7 +25,10 @@ SECRET_KEY = 'h$8(q#h@um0+58w77p+7xcajczlh(zqjb+u^(v4__w%hc*=6ex'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.102', '192.168.0.102:8000']
+ALLOWED_HOSTS = ['192.168.0.102', '192.168.0.102:8000', '127.0.0.1:8000', '127.0.0.1']
+
+SERVER_ADDRESS = '192.168.0.102'
+SERVER_PORT = 10002
 
 
 # Application definition
@@ -41,6 +44,7 @@ INSTALLED_APPS = [
     'Account',
     'Device',
     'Main',
+    'SocketTCP',
 ]
 
 MIDDLEWARE = [

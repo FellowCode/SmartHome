@@ -41,8 +41,15 @@ def user_logout(request):
 
 
 def user_account(request):
+    import Main.views as main
+
     user = request.user
     if user and user.is_authenticated:
         device_list = Termocontroller.objects.filter(user=user)
+        for device in device_list:
+            client = main.server.find_client_by_id(device.id)
+            if client:
+                print(client.id)
+                client.send_update_request()
         return render(request, 'Account/UserAccount.html', {'device_list': device_list})
     return redirect('/')

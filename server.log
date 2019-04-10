@@ -1,1 +1,90 @@
 INFO:root:Server started: '2019.04.10 00:24'
+INFO:root:Server started: '2019.04.10 00:37'
+INFO:root:Server started: '2019.04.10 14:29'
+INFO:root:Server started: '2019.04.10 14:59'
+INFO:root:Server started: '2019.04.10 15:11'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.10 16:27'
+INFO:root:Server started: '2019.04.10 16:27'
+INFO:root:Server started: '2019.04.10 16:32'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.10 16:35'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.10 16:37'
+INFO:root:Server started: '2019.04.10 16:39'
+INFO:root:Server started: '2019.04.10 16:40'
+INFO:root:Server started: '2019.04.10 16:42'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.10 16:52'
+INFO:root:Server started: '2019.04.10 16:53'
+ERROR:django.security.DisallowedHost:Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+WARNING:django.request:Bad Request: /
+ERROR:django.security.DisallowedHost:Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+WARNING:django.request:Bad Request: /favicon.ico
+INFO:root:Server started: '2019.04.10 16:54'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.10 16:55'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Main\views.py changed, reloading.
+INFO:root:Server started: '2019.04.10 18:45'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.10 18:53'
+ERROR:django.security.DisallowedHost:Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+WARNING:django.request:Bad Request: /
+ERROR:django.security.DisallowedHost:Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+WARNING:django.request:Bad Request: /favicon.ico
+INFO:root:Server started: '2019.04.10 18:54'
+ERROR:django.security.DisallowedHost:Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+WARNING:django.request:Bad Request: /
+ERROR:django.security.DisallowedHost:Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+WARNING:django.request:Bad Request: /favicon.ico
+INFO:root:Server started: '2019.04.10 18:54'
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.10 18:58'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.10 18:59'
+INFO:root:Server started: '2019.04.10 19:03'
+INFO:root:Server started: '2019.04.10 19:05'
+INFO:root:Server started: '2019.04.10 19:06'
+INFO:root:Server started: '2019.04.10 19:08'
+INFO:root:Server started: '2019.04.10 19:10'
+INFO:root:Server started: '2019.04.10 19:15'
+INFO:root:Server started: '2019.04.10 19:18'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.10 19:28'
+INFO:root:Server started: '2019.04.10 19:29'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.10 19:32'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.10 19:46'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.10 19:49'
+INFO:root:Server started: '2019.04.10 19:51'
+INFO:root:Server started: '2019.04.10 19:56'
+INFO:root:Server started: '2019.04.10 20:53'
+INFO:root:Server started: '2019.04.10 20:53'
+INFO:root:Server started: '2019.04.10 20:54'
+INFO:root:Server started: '2019.04.10 20:55'
+INFO:root:Server started: '2019.04.10 20:55'
+INFO:root:Server started: '2019.04.10 20:56'
+INFO:root:Server started: '2019.04.10 20:56'
+INFO:root:Server started: '2019.04.10 20:57'
+INFO:root:Server started: '2019.04.10 20:57'
+INFO:root:Server started: '2019.04.10 21:02'
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 51, in user_account
+    print(client.id)
+AttributeError: 'NoneType' object has no attribute 'id'
+INFO:root:Server started: '2019.04.10 21:04'
+INFO:root:Server started: '2019.04.10 21:16'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.10 21:19'
+INFO:root:Server started: '2019.04.10 21:21'

@@ -6,10 +6,10 @@ HTTPClient http;
 
 String split[2];
 
-class PostData{
+class JsonData{
   String data;
   
-  public: PostData(){
+  public: JsonData(){
     data = "";
   }
   public: void AddField(String key, String value){
@@ -37,7 +37,7 @@ void Split(String value, char c){
 }
 void SendWebRequest(){
   Serial.println("Send web request");
-  PostData post = PostData();
+  JsonData post;
 
   post.AddField("AccountLogin", AccountLogin);
   post.AddField("AccountPassword", AccountPassword);

@@ -33,7 +33,7 @@ Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS,  TFT_DC);
 
 enum {MAIN, SETTINGS, STATISTIC};    //Sheets
 enum {Date, Time, Display, Hysteresis, Watts, ResetWatts, WiFiSetup, ResetParams};
-enum {WiFiHotspot, WiFiClient, SSID, Password, IP};
+enum {WiFi_HOTSPOT, WiFi_CLIENT, SSID, Password, IP};
 
 const byte sheetCount = 3;
 bool isActive = false;
@@ -61,11 +61,14 @@ bool ApIsCreated = false;
 bool clientOn = false;
 bool clientIsConnected = false;
 
-////**** Http ****//////////
+////**** Http/TCP ****//////////
 String AccountLogin = "";
 String AccountPassword = "";
 String UniqueId = "";
 String webServerUrl = "http://192.168.0.102:8000/";
+
+IPAddress serverAddress(192,168,0,102);
+
 String deviceModelName = "TermoController-battery v1.0";
 bool changeWebTargetTemp = false;
 bool Error = false;
@@ -147,7 +150,8 @@ void loop()
       return;
     loopTimer = millis();
   }
-  HttpLoop();
+  //HttpLoop();
+  TcpLoop();
   checkSettingBlink();
   checkBattery();
   dhtGetData();
