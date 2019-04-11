@@ -39,8 +39,7 @@ void SendWebRequest(){
   Serial.println("Send web request");
   JsonData post;
 
-  post.AddField("AccountLogin", AccountLogin);
-  post.AddField("AccountPassword", AccountPassword);
+  post.AddField("api_key", api_key);
 
   post.AddField("model_name", deviceModelName);
   post.AddField("temp", String(temp));

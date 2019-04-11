@@ -105,7 +105,7 @@ void TcpGet(String data){
    }
    SaveParams();
  }
- else if (command == "AuthError"){
+ else if (command == "AuthError" || command == "HashCheckError"){
   Error = true;
   tftUpdateData();
  }
@@ -124,8 +124,7 @@ void SendDataToServer(){
     data.AddField("string_id", UniqueId);
   }
   
-  data.AddField("AccountLogin", AccountLogin);
-  data.AddField("AccountPassword", AccountPassword);
+  data.AddField("api_key", api_key);
 
   data.AddField("model_name", deviceModelName);
   data.AddField("temp", String(temp));
@@ -138,6 +137,8 @@ void SendDataToServer(){
     changeWebTargetTemp = false;
   } else
     data.AddField("ChangeTargetTemp", "False");
-    
+
+  data.AddField("hash", sha1(command + ":" + data.get() + ";" + secret_key));
+
   TcpSend(command + ":" + data.get());
 }

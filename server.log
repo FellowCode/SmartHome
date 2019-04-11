@@ -88,3 +88,544 @@ INFO:root:Server started: '2019.04.10 21:16'
 INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
 INFO:root:Server started: '2019.04.10 21:19'
 INFO:root:Server started: '2019.04.10 21:21'
+INFO:root:Server started: '2019.04.11 17:13'
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\admin.py changed, reloading.
+INFO:root:Server started: '2019.04.11 17:45'
+INFO:root:Server started: '2019.04.11 17:46'
+INFO:root:Server started: '2019.04.11 17:47'
+INFO:root:Server started: '2019.04.11 17:47'
+ERROR:django.request:Internal Server Error: /account/signup/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 14, in signup
+    password=form.cleaned_data['password'])
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\models.py", line 151, in create_user
+    return self._create_user(username, email, password, **extra_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\models.py", line 143, in _create_user
+    user = self.model(username=username, email=email, **extra_fields)
+  File "D:\work\django\SmartHome\Account\models.py", line 24, in __init__
+    if not ExtendedUser.objects.get(api_key=self.api_key):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 408, in get
+    self.model._meta.object_name
+Account.models.ExtendedUser.DoesNotExist: ExtendedUser matching query does not exist.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\models.py changed, reloading.
+INFO:root:Server started: '2019.04.11 17:49'
+ERROR:django.request:Internal Server Error: /account/signup/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 14, in signup
+    password=form.cleaned_data['password'])
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\models.py", line 151, in create_user
+    return self._create_user(username, email, password, **extra_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\models.py", line 145, in _create_user
+    user.save(using=self._db)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\base_user.py", line 66, in save
+    super().save(*args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 741, in save
+    force_update=force_update, update_fields=update_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 776, in save_base
+    parent_inserted = self._save_parents(cls, using, update_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 807, in _save_parents
+    force_insert=parent_inserted,
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 851, in _save_table
+    forced_update)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 880, in _do_update
+    filtered = base_qs.filter(pk=pk_val)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 892, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 910, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\query.py", line 1290, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\query.py", line 1318, in _add_q
+    split_subq=split_subq, simple_col=simple_col,
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\query.py", line 1251, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\query.py", line 1116, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\lookups.py", line 20, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\lookups.py", line 70, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\fields\__init__.py", line 966, in get_prep_value
+    return int(value)
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'tuple'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.11 17:55'
+ERROR:django.request:Internal Server Error: /account/signup/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 15, in signup
+    password=form.cleaned_data['password'])
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\models.py", line 151, in create_user
+    return self._create_user(username, email, password, **extra_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\models.py", line 145, in _create_user
+    user.save(using=self._db)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\base_user.py", line 66, in save
+    super().save(*args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 741, in save
+    force_update=force_update, update_fields=update_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 776, in save_base
+    parent_inserted = self._save_parents(cls, using, update_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 807, in _save_parents
+    force_insert=parent_inserted,
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 851, in _save_table
+    forced_update)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 880, in _do_update
+    filtered = base_qs.filter(pk=pk_val)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 892, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 910, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\query.py", line 1290, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\query.py", line 1318, in _add_q
+    split_subq=split_subq, simple_col=simple_col,
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\query.py", line 1251, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\query.py", line 1116, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\lookups.py", line 20, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\lookups.py", line 70, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\fields\__init__.py", line 966, in get_prep_value
+    return int(value)
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'tuple'
+INFO:root:Server started: '2019.04.11 17:58'
+ERROR:django.request:Internal Server Error: /account/signup/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 15, in signup
+    password=form.cleaned_data['password'])
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\models.py", line 151, in create_user
+    return self._create_user(username, email, password, **extra_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\models.py", line 145, in _create_user
+    user.save(using=self._db)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\base_user.py", line 66, in save
+    super().save(*args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 741, in save
+    force_update=force_update, update_fields=update_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 776, in save_base
+    parent_inserted = self._save_parents(cls, using, update_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 807, in _save_parents
+    force_insert=parent_inserted,
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 851, in _save_table
+    forced_update)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 880, in _do_update
+    filtered = base_qs.filter(pk=pk_val)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 892, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 910, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\query.py", line 1290, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\query.py", line 1318, in _add_q
+    split_subq=split_subq, simple_col=simple_col,
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\query.py", line 1251, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\query.py", line 1116, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\lookups.py", line 20, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\lookups.py", line 70, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\fields\__init__.py", line 966, in get_prep_value
+    return int(value)
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'tuple'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.11 17:59'
+ERROR:django.request:Internal Server Error: /account/signup/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 15, in signup
+    password=str(form.cleaned_data['password']))
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\models.py", line 151, in create_user
+    return self._create_user(username, email, password, **extra_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\models.py", line 145, in _create_user
+    user.save(using=self._db)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\base_user.py", line 66, in save
+    super().save(*args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 741, in save
+    force_update=force_update, update_fields=update_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 776, in save_base
+    parent_inserted = self._save_parents(cls, using, update_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 807, in _save_parents
+    force_insert=parent_inserted,
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 851, in _save_table
+    forced_update)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 880, in _do_update
+    filtered = base_qs.filter(pk=pk_val)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 892, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 910, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\query.py", line 1290, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\query.py", line 1318, in _add_q
+    split_subq=split_subq, simple_col=simple_col,
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\query.py", line 1251, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\query.py", line 1116, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\lookups.py", line 20, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\lookups.py", line 70, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\fields\__init__.py", line 966, in get_prep_value
+    return int(value)
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'tuple'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\models.py changed, reloading.
+INFO:root:Server started: '2019.04.11 18:08'
+INFO:root:Server started: '2019.04.11 18:09'
+INFO:root:Server started: '2019.04.11 18:09'
+INFO:root:Server started: '2019.04.11 18:09'
+ERROR:django.request:Internal Server Error: /account/signup/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 13, in signup
+    user = ExtendedUser.objects.create_user(username=str(form.cleaned_data['email'].lower()),
+AttributeError: 'Manager' object has no attribute 'create_user'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\models.py changed, reloading.
+INFO:root:Server started: '2019.04.11 18:13'
+ERROR:django.request:Internal Server Error: /account/signup/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 15, in signup
+    password=str(form.cleaned_data['password']))
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\models.py", line 151, in create_user
+    return self._create_user(username, email, password, **extra_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\models.py", line 145, in _create_user
+    user.save(using=self._db)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\base_user.py", line 66, in save
+    super().save(*args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 741, in save
+    force_update=force_update, update_fields=update_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 790, in save_base
+    update_fields=update_fields, raw=raw, using=using,
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\dispatch\dispatcher.py", line 175, in send
+    for receiver in self._live_receivers(sender)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\dispatch\dispatcher.py", line 175, in <listcomp>
+    for receiver in self._live_receivers(sender)
+  File "D:\work\django\SmartHome\Account\models.py", line 39, in create_user_profile
+    ExtendedUser.objects.create(user=instance)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 422, in create
+    obj.save(force_insert=True, using=self.db)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 741, in save
+    force_update=force_update, update_fields=update_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 779, in save_base
+    force_update, using, update_fields,
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 870, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 908, in _do_insert
+    using=using, raw=raw)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 1186, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1331, in execute_sql
+    for sql, params in self.as_sql():
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1275, in as_sql
+    for obj in self.query.objs
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1275, in <listcomp>
+    for obj in self.query.objs
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1274, in <listcomp>
+    [self.prepare_value(field, self.pre_save_val(field, obj)) for field in fields]
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1215, in prepare_value
+    value = field.get_db_prep_save(value, connection=self.connection)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\fields\__init__.py", line 789, in get_db_prep_save
+    return self.get_db_prep_value(value, connection=connection, prepared=False)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\fields\__init__.py", line 957, in get_db_prep_value
+    value = self.get_prep_value(value)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\fields\__init__.py", line 966, in get_prep_value
+    return int(value)
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'tuple'
+INFO:root:Server started: '2019.04.11 18:14'
+ERROR:django.request:Internal Server Error: /account/signup/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\backends\sqlite3\base.py", line 383, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.OperationalError: no such table: auth_user
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 15, in signup
+    password=str(form.cleaned_data['password']))
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\models.py", line 151, in create_user
+    return self._create_user(username, email, password, **extra_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\models.py", line 145, in _create_user
+    user.save(using=self._db)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\base_user.py", line 66, in save
+    super().save(*args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 741, in save
+    force_update=force_update, update_fields=update_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 779, in save_base
+    force_update, using, update_fields,
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 870, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 908, in _do_insert
+    using=using, raw=raw)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 1186, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1332, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\backends\utils.py", line 99, in execute
+    return super().execute(sql, params)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\backends\utils.py", line 76, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\backends\sqlite3\base.py", line 383, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.OperationalError: no such table: auth_user
+INFO:root:Server started: '2019.04.11 18:15'
+INFO:root:Server started: '2019.04.11 18:15'
+INFO:root:Server started: '2019.04.11 18:16'
+INFO:root:Server started: '2019.04.11 18:16'
+ERROR:django.request:Internal Server Error: /account/signup/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 15, in signup
+    password=str(form.cleaned_data['password']))
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\models.py", line 151, in create_user
+    return self._create_user(username, email, password, **extra_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\models.py", line 145, in _create_user
+    user.save(using=self._db)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\base_user.py", line 66, in save
+    super().save(*args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 741, in save
+    force_update=force_update, update_fields=update_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 790, in save_base
+    update_fields=update_fields, raw=raw, using=using,
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\dispatch\dispatcher.py", line 175, in send
+    for receiver in self._live_receivers(sender)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\dispatch\dispatcher.py", line 175, in <listcomp>
+    for receiver in self._live_receivers(sender)
+  File "D:\work\django\SmartHome\Account\models.py", line 39, in create_user_profile
+    ExtendedUser.objects.create(user=instance)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 422, in create
+    obj.save(force_insert=True, using=self.db)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 741, in save
+    force_update=force_update, update_fields=update_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 779, in save_base
+    force_update, using, update_fields,
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 870, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 908, in _do_insert
+    using=using, raw=raw)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 1186, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1331, in execute_sql
+    for sql, params in self.as_sql():
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1275, in as_sql
+    for obj in self.query.objs
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1275, in <listcomp>
+    for obj in self.query.objs
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1274, in <listcomp>
+    [self.prepare_value(field, self.pre_save_val(field, obj)) for field in fields]
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1215, in prepare_value
+    value = field.get_db_prep_save(value, connection=self.connection)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\fields\__init__.py", line 789, in get_db_prep_save
+    return self.get_db_prep_value(value, connection=connection, prepared=False)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\fields\__init__.py", line 957, in get_db_prep_value
+    value = self.get_prep_value(value)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\fields\__init__.py", line 966, in get_prep_value
+    return int(value)
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'tuple'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.11 18:20'
+ERROR:django.request:Internal Server Error: /account/signup/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 15, in signup
+    password=form.cleaned_data['password'])
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 422, in create
+    obj.save(force_insert=True, using=self.db)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\base_user.py", line 66, in save
+    super().save(*args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 741, in save
+    force_update=force_update, update_fields=update_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 790, in save_base
+    update_fields=update_fields, raw=raw, using=using,
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\dispatch\dispatcher.py", line 175, in send
+    for receiver in self._live_receivers(sender)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\dispatch\dispatcher.py", line 175, in <listcomp>
+    for receiver in self._live_receivers(sender)
+  File "D:\work\django\SmartHome\Account\models.py", line 39, in create_user_profile
+    ExtendedUser.objects.create(user=instance)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 422, in create
+    obj.save(force_insert=True, using=self.db)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 741, in save
+    force_update=force_update, update_fields=update_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 779, in save_base
+    force_update, using, update_fields,
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 870, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 908, in _do_insert
+    using=using, raw=raw)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 1186, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1331, in execute_sql
+    for sql, params in self.as_sql():
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1275, in as_sql
+    for obj in self.query.objs
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1275, in <listcomp>
+    for obj in self.query.objs
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1274, in <listcomp>
+    [self.prepare_value(field, self.pre_save_val(field, obj)) for field in fields]
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1215, in prepare_value
+    value = field.get_db_prep_save(value, connection=self.connection)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\fields\__init__.py", line 789, in get_db_prep_save
+    return self.get_db_prep_value(value, connection=connection, prepared=False)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\fields\__init__.py", line 957, in get_db_prep_value
+    value = self.get_prep_value(value)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\fields\__init__.py", line 966, in get_prep_value
+    return int(value)
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'tuple'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.11 18:21'
+INFO:root:Server started: '2019.04.11 18:22'
+INFO:root:Server started: '2019.04.11 18:25'
+INFO:root:Server started: '2019.04.11 18:29'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\models.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\models.py changed, reloading.
+INFO:root:Server started: '2019.04.12 01:16'
+INFO:root:Server started: '2019.04.12 01:18'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.12 01:21'
+INFO:root:Server started: '2019.04.12 01:21'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.12 01:23'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.12 01:23'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.12 01:24'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.12 01:25'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.12 01:26'
+INFO:root:Server started: '2019.04.12 01:26'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.12 01:28'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.12 01:28'
+INFO:root:Server started: '2019.04.12 01:29'
+INFO:root:Server started: '2019.04.12 01:29'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.12 01:31'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.12 01:39'
+INFO:root:Server started: '2019.04.12 01:42'
+INFO:root:Server started: '2019.04.12 01:42'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.12 01:43'
+INFO:root:Server started: '2019.04.12 01:43'
+INFO:root:Server started: '2019.04.12 01:44'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.12 01:45'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.12 01:48'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.12 01:49'
+INFO:root:Server started: '2019.04.12 01:51'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.12 01:53'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.12 01:56'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.12 02:00'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\models.py changed, reloading.
+INFO:root:Server started: '2019.04.12 02:01'
+INFO:root:Server started: '2019.04.12 02:14'
+INFO:root:Server started: '2019.04.12 02:16'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.12 02:33'
+INFO:root:Server started: '2019.04.12 02:35'

@@ -15,6 +15,8 @@
                 <div class="col s12">
                     <h6 class="username">{{ request.user.username }}</h6>
                     <h6 class="name">{{ request.user.first_name }} {{ request.user.last_name }}</h6>
+                    <h6>Api key: {{ ext_user.api_key }}</h6>
+                    <h6>Secret key: {{ ext_user.secret_key }}</h6>
                     <a href="#" class="btn waves-effect main-bg-color personal-data">Изменить</a>
                 </div>
                 <div class="col s12">

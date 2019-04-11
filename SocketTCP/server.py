@@ -6,6 +6,10 @@ import select
 import queue
 import logging
 from datetime import datetime
+import hashlib
+
+from Account.models import ExtendedUser
+from django.contrib.auth.models import User
 
 from django.contrib.auth import authenticate
 
@@ -69,26 +73,26 @@ class Server(Thread):
                 else:
                     # Если от сокета клиента, принимаем данные
                     try:
-                        s.setblocking(False)
-                        s.settimeout(0)
                         data = s.recv(2048)
+                    except:
+                        print(sys.exc_info())
+                        # При ошибке отключаем клиента
+                        self.client_disconnect(s)
+                    else:
                         if data:
                             if data != b'disconnect':
                                 self.clients[s].get_data_handler(data)
                             else:
                                 self.client_disconnect(s)
-                    except Exception:
-                        print(sys.exc_info())
-                        # При ошибке отключаем клиента
-                        self.client_disconnect(s)
+
             for s in writable:
                 # Исходящие данные
                 try:
-                    next_msg = self.clients[s].q.get_nowait()
-                except queue.Empty:
-                    pass
-                else:
-                    s.send(next_msg)
+                    if not self.clients[s].q.empty():
+                        next_msg = self.clients[s].q.get_nowait()
+                        s.send(next_msg)
+                except:
+                    self.client_disconnect(s)
 
             for s in exceptional:
                 # При ошибке на сокете исключаем его
@@ -138,46 +142,53 @@ class Client:
 
     def get_data_handler(self, data):
         print(self.get_address() + ' > ' + str(data))
-        data = data.decode('utf-8')
-        data = data.strip().split(':')
-        command = data[0]
+        data = data.decode('utf-8').strip()
+        data_s = data.split(':')
+        command = data_s[0]
         if command == 'ChangeValues':
+            check_str = data[:data.rfind('&')]
             request = {}
-            field_list = data[1].split('&')
+            field_list = data_s[1].split('&')
             for field in field_list:
                 key, value = field.split('=')
                 request[key] = value
-            self.change_termo_values(request)
+            self.change_termo_values(request, check_str)
 
 
-    def change_termo_values(self, request):
+    def change_termo_values(self, request, check_str):
         termo_c = None
         data = {}
         answer = 'AuthError'
-        user = authenticate(username=request['AccountLogin'], password=request['AccountPassword'])
+        user = User.objects.get(extendeduser__api_key=request['api_key'])
         if user:
-            if ('init' in request and request['init'] == 'True'):
-                termo_c = self.create_termo(request, user)
-                data['string_id'] = termo_c.string_id
-            if not termo_c:
-                try:
-                    termo_c = Termocontroller.objects.get(string_id=str(request['string_id']))
-                    if (request['ChangeTargetTemp'] == 'True'):
-                        termo_c.target_temp = float(request['target_temp'])
-                except:
+            #Проверка данных хешированием с секретным ключом
+            hash_str = check_str + ';' + user.extendeduser.secret_key
+            hash = hashlib.sha1(hash_str.encode()).hexdigest()
+            if request['hash'] == hash:
+                if ('init' in request and request['init'] == 'True'):
                     termo_c = self.create_termo(request, user)
                     data['string_id'] = termo_c.string_id
-            termo_c.temp = float(request['temp'])
-            termo_c.humidity = float(request['humidity'])
-            termo_c.KWatts = float(request['KWatts'])
-            termo_c.save()
-            if float(request['target_temp']) != float(termo_c.target_temp):
-                data['target_temp'] = termo_c.target_temp
-            if len(data) > 0:
-                self.change_termo_config(data)
-            self.id = termo_c.id
-            return
-        self.send(answer.encode())
+                if not termo_c:
+                    try:
+                        termo_c = Termocontroller.objects.get(string_id=str(request['string_id']))
+                        if (request['ChangeTargetTemp'] == 'True'):
+                            termo_c.target_temp = float(request['target_temp'])
+                    except:
+                        termo_c = self.create_termo(request, user)
+                        data['string_id'] = termo_c.string_id
+                termo_c.temp = float(request['temp'])
+                termo_c.humidity = float(request['humidity'])
+                termo_c.KWatts = float(request['KWatts'])
+                termo_c.save()
+                if float(request['target_temp']) != float(termo_c.target_temp):
+                    data['target_temp'] = termo_c.target_temp
+                if len(data) > 0:
+                    self.change_termo_config(data)
+                self.id = termo_c.id
+                return
+            answer = 'HashCheckError'
+        print('answer', answer)
+        self.send(answer)
 
     def create_termo(self, request, user):
         model_name = request['model_name']
@@ -198,14 +209,16 @@ class Client:
         for key, val in data.items():
             l.append(str(key) + '=' + str(val))
         command += ';'.join(l)
-        self.send(command.encode())
+        self.send(command)
 
     def send_update_request(self):
         command = self.CM_NEED_DATA
-        self.send(command.encode())
+        self.send(command)
 
     #data - байты
     def send(self, data):
+        if type(data) == str:
+            data = data.encode()
         print(data)
         # if not self.connection in self.server.outputs:
         #     self.server.outputs.append(self.connection)

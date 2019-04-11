@@ -10,8 +10,9 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPClient.h>
 #include <asyncHTTPrequest.h>
+#include <Hash.h>
 
-#define LOOP_DELAY  5
+#define LOOP_DELAY  10
 unsigned long loopTimer;
 //////*******************///////////
 
@@ -27,9 +28,10 @@ long dht_timer = 0;
 
 #define TFT_CS     0
 #define TFT_DC     2
+#define TFT_RST    5
 #define TFT_LED    15
 
-Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS,  TFT_DC);
+Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS,  TFT_DC, TFT_RST);
 
 enum {MAIN, SETTINGS, STATISTIC};    //Sheets
 enum {Date, Time, Display, Hysteresis, Watts, ResetWatts, WiFiSetup, ResetParams};
@@ -62,8 +64,8 @@ bool clientOn = false;
 bool clientIsConnected = false;
 
 ////**** Http/TCP ****//////////
-String AccountLogin = "";
-String AccountPassword = "";
+String api_key = "";
+String secret_key = "";
 String UniqueId = "";
 String webServerUrl = "http://192.168.0.102:8000/";
 
@@ -89,8 +91,8 @@ IPAddress routerIP(192,168,0,1);
 #define A_STATISTIC      22          // 28 byte
 #define A_SSID           50          // 32 byte
 #define A_PASSWORD       82          // 32 byte
-#define A_LOGIN          114
-#define A_SITE_PASSWORD  146
+#define A_API_KEY        114         // 32 byte
+#define A_SECRET_KEY     146         // 32 byte
 #define A_UNIQUE_ID      178         // 36 byte
 #define A_WIFI_STATUS    214         // 1 byte
 
@@ -103,7 +105,7 @@ int watts = 2000;
 float hysteresis = 0.1;
 float KWt = 0.0;
 ////****************/////
-#define RELE_PIN   16
+#define RELE_PIN   4
 
 bool isWork = false;
 bool needTempChanged = false;
@@ -118,12 +120,14 @@ byte currentDay;
 
 const char* brandName = "SmaHou";
 const char* deviceName = "Termo_R.00";
-
+#include "user_interface.h"
 void setup() {
+  WiFi.setPhyMode(WIFI_PHY_MODE_11B);
+  /*if (resetInfo->reason != REASON_DEEP_SLEEP_AWAKE) {
+    ESP.deepSleep(10, WAKE_RF_DEFAULT)
+  }*/
   EEPROM.begin(512);
   Serial.begin(115200);
-  pinMode(5, OUTPUT);
-  digitalWrite(5, HIGH);
   //setTime(0, 0, 0, 1, 1, 2018);
   //SaveDateTime();
   LoadDateTime();
@@ -212,9 +216,9 @@ void LoadParams()
   LoadStatistic(A_STATISTIC);
   clientSSID = LoadString(A_SSID);
   clientPassword = LoadString(A_PASSWORD);
-  AccountLogin = LoadString(A_LOGIN);
-  AccountPassword = LoadString(A_SITE_PASSWORD);
   UniqueId = LoadString36(A_UNIQUE_ID);
+  api_key = LoadString(A_API_KEY);
+  secret_key = LoadString(A_SECRET_KEY);
   WiFiOn = LoadByte(A_WIFI_STATUS) == 1;
 }
 void resetParams()
@@ -235,9 +239,9 @@ void SaveParams()
   SaveFloat(A_HYSTERESIS, hysteresis);
   SaveString(A_SSID, clientSSID);
   SaveString(A_PASSWORD, clientPassword);
-  SaveString(A_LOGIN, AccountLogin);
-  SaveString(A_SITE_PASSWORD, AccountPassword);
   SaveString36(A_UNIQUE_ID, UniqueId);
+  SaveString(A_API_KEY, api_key);
+  SaveString(A_SECRET_KEY, secret_key);
   SaveByte(A_WIFI_STATUS, byte(WiFiOn && clientOn));
 }
 void btnSetup()

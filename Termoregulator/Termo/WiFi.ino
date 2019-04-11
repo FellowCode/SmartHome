@@ -1,4 +1,4 @@
-#define CONNECT_CHECK_DELAY   30 // Ожидание подключения
+#define CONNECT_CHECK_DELAY   120 // Ожидание подключения
 
 unsigned long connectTimer = 0;
 unsigned long reconnectTimer = 0;
@@ -63,8 +63,8 @@ void WiFiConnect()
   WiFi.mode(WIFI_STA);
   /*serverIsCreated = WiFi.softAP(base_ssid, base_password);
    delay(100);*/
-  //WiFi.disconnect(true);
-  //WiFi.setAutoConnect(false);
+  WiFi.disconnect(true);
+  WiFi.setAutoConnect(false);
   //WiFi.setPhyMode(WIFI_PHY_MODE_11G);
   
   //Serial.println(WiFi.getPhyMode());
@@ -72,7 +72,7 @@ void WiFiConnect()
   Serial.println("Password: " + String(clientPassword));
   WiFiMulti = ESP8266WiFiMulti();
   WiFiMulti.addAP(clientSSID.c_str(), clientPassword.c_str());
-  //WiFi.begin(ssid, password);
+  //WiFi.begin(clientSSID.c_str(), clientPassword.c_str());
   //WiFi.printDiag(Serial);
   connectTimer = millis();
   SaveParams();
@@ -82,6 +82,7 @@ void WiFiDisconnect()
 {
   connectionCounter = 0;
   Serial.println();
+  WiFi.disconnect();
   server.stop();
   WiFi.mode(WIFI_OFF);
   WiFiOn = false;
@@ -94,7 +95,9 @@ void WiFiClientLoop()
   if (!clientOn)
     return;
   if (WiFiMulti.run() != WL_CONNECTED && connectTimer + CONNECT_CHECK_DELAY*1000 < millis()){
-    ESP.restart();
+    WiFiDisconnect();
+    ESP.eraseConfig();
+    ESP.reset();
   }
   if (WiFiMulti.run() != WL_CONNECTED)
     return;

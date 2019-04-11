@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from Account.models import ExtendedUser
 import uuid
 
 
@@ -26,7 +27,6 @@ class Termocontroller(models.Model):
         super().__init__(*args, **kwargs)
         if not self.string_id:
             self.string_id = str(uuid.uuid4())
-            print('generate')
 
 
 class TermocontrollerName(models.Model):

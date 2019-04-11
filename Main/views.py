@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from SocketTCP.server import Server
+from SmartHome.settings import *
 
-server = Server()
-server.start()
+if SERVER_ON:
+    server = Server()
+    server.start()
 
 def index(request):
     return render(request, 'Main/Index.html')

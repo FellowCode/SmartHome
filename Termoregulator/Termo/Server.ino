@@ -48,8 +48,8 @@ void handleSendSettingsData()
   message += "watts="+String(watts) + ";";
   message += "WiFiSSID="+clientSSID + ";";
   message += "WiFiPassword="+clientPassword + ";";
-  message += "AccountLogin="+AccountLogin + ";";
-  message += "AccountPassword="+AccountPassword + ";"; 
+  message += "api_key="+api_key + ";";
+  message += "secret_key"+secret_key + ";";
 
   server.send(200, "text/html", message);
 }
@@ -82,10 +82,10 @@ void handleSetSettingsData()
       clientSSID = server.arg(i);
      else if (key == "WiFiPassword")
       clientPassword = server.arg(i);
-     else if (key == "AccountLogin")
-      AccountLogin = server.arg(i);
-     else if (key == "AccountPassword")
-      AccountPassword = server.arg(i);
+     else if (key == "api_key")
+      api_key = server.arg(i);
+     else if (key == "secret_key")
+      secret_key = server.arg(i);
      else if (key == "date")
       setDate(server.arg(i));
      else if (key == "time")

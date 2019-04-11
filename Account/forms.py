@@ -64,7 +64,7 @@ class SignUpForm(forms.Form):
             self.add_error('password_confirm', 'Пароли не совпадают')
 
     def forbidden_sym(self, value):
-        forb_sym = '!@#$%^&*()~`\'\"; :][}{\\|+=-_?><,./'
+        forb_sym = ';: '
         for char in forb_sym:
             if char in value:
                 return True

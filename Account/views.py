@@ -1,16 +1,18 @@
 from django.shortcuts import render, redirect
+
+from Account.models import ExtendedUser
 from .forms import *
-from django.contrib.auth.models import User
 from Device.models import Termocontroller
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 
 
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            user = User.objects.create_user(username=form.cleaned_data['email'].lower(),
-                                       email=form.cleaned_data['email'],
+            user = User.objects.create(username=form.cleaned_data['email'].lower(),
+                                       email=form.cleaned_data['email'].lower(),
                                        password=form.cleaned_data['password'])
             user.first_name = form.cleaned_data['first_name']
             user.last_name = form.cleaned_data['last_name']
@@ -51,5 +53,6 @@ def user_account(request):
             if client:
                 print(client.id)
                 client.send_update_request()
-        return render(request, 'Account/UserAccount.html', {'device_list': device_list})
+        ext_user = user.extendeduser
+        return render(request, 'Account/UserAccount.html', {'device_list': device_list, 'ext_user': ext_user})
     return redirect('/')

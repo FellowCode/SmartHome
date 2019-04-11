@@ -178,7 +178,7 @@ void dhtGetData()
       dht_timer = millis() + DHT_TIMEOUT*1000;
     }
     else
-      dht_timer = millis() + 1000;
+      dht_timer = millis() + 2000;
     checkTemp();
   }
 }
