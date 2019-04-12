@@ -95,17 +95,24 @@ IPAddress routerIP(192,168,0,1);
 #define A_SECRET_KEY     146         // 32 byte
 #define A_UNIQUE_ID      178         // 36 byte
 #define A_WIFI_STATUS    214         // 1 byte
+#define A_ENABLE    215         // 1 byte
 
 ////***DEFAULT PARAMS****////
 
+#define NEED_TEMP_CHANGE_REQ_DELAY    3 //sec
+
+enum {DISABLED, ENABLED};
+
+byte enable = ENABLED;
 unsigned long powerTime = 0;   //seconds
+unsigned long int needTempChangeTime = 0;
 float needTemp = 22.0f;
 int tftActiveTime = 60;
 int watts = 2000;
 float hysteresis = 0.1;
 float KWt = 0.0;
 ////****************/////
-#define RELE_PIN   4
+
 
 bool isWork = false;
 bool needTempChanged = false;
@@ -220,6 +227,7 @@ void LoadParams()
   api_key = LoadString(A_API_KEY);
   secret_key = LoadString(A_SECRET_KEY);
   WiFiOn = LoadByte(A_WIFI_STATUS) == 1;
+  enable = LoadByte(A_ENABLE);
 }
 void resetParams()
 {
@@ -228,7 +236,15 @@ void resetParams()
   watts = 2000;
   hysteresis = 0.1;
   KWt = 0.0;
+  clientSSID = "";
+  clientPassword = "";
+  UniqueId = "";
+  api_key = "";
+  secret_key = "";
+  WiFiOn = false;
+  enable = ENABLED;
   SaveParams();
+  ESP.restart();
 }
 void SaveParams()
 {
@@ -243,6 +259,7 @@ void SaveParams()
   SaveString(A_API_KEY, api_key);
   SaveString(A_SECRET_KEY, secret_key);
   SaveByte(A_WIFI_STATUS, byte(WiFiOn && clientOn));
+  SaveByte(A_ENABLE, enable);
 }
 void btnSetup()
 {

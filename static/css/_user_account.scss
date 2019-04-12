@@ -11,4 +11,40 @@
   .btn.personal-data{
     margin: 15px 0 30px 30px
   }
+  .device{
+    border: 1px solid #bbbbbb ;
+    .switch{
+      margin-top: 5px;
+      .lever{
+        margin-left: 5px;
+        margin-right: 5px;
+      }
+
+    }
+    .image{
+      margin-top: 35px;
+    }
+    .name{
+      margin-top: 5px;
+    }
+    h6{
+      font-size: 18px;
+      margin-left: 20px;
+    }
+    div.target-temp{
+      margin-top: 5px;
+      font-size: 18px;
+      padding-left: 30px;
+      .input-field.inline{
+        margin-top: 0;
+        margin-bottom: 0;
+        input{
+          margin-bottom: 2px;
+          height: 25px;
+          width: 55px;
+          font-size: 18px;
+        }
+      }
+    }
+  }
 }

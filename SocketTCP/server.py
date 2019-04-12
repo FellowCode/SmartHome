@@ -171,19 +171,24 @@ class Client:
                 if not termo_c:
                     try:
                         termo_c = Termocontroller.objects.get(string_id=str(request['string_id']))
-                        if (request['ChangeTargetTemp'] == 'True'):
-                            termo_c.target_temp = float(request['target_temp'])
                     except:
                         termo_c = self.create_termo(request, user)
                         data['string_id'] = termo_c.string_id
+                    else:
+                        if request['ChangeTargetTemp'] == 'True':
+                            termo_c.target_temp = float(request['target_temp'])
+                        if request['ChangeEnable'] == 'True':
+                            termo_c.enabled = request['enable'] == 'True'
                 termo_c.temp = float(request['temp'])
                 termo_c.humidity = float(request['humidity'])
                 termo_c.KWatts = float(request['KWatts'])
                 termo_c.save()
+                if termo_c.enabled != (request['enable'] == 'True'):
+                    data['enable'] = termo_c.enabled
                 if float(request['target_temp']) != float(termo_c.target_temp):
                     data['target_temp'] = termo_c.target_temp
                 if len(data) > 0:
-                    self.change_termo_config(data)
+                    self.change_termo_config(data, user)
                 self.id = termo_c.id
                 return
             answer = 'HashCheckError'
@@ -203,13 +208,16 @@ class Client:
         termo_c.target_temp = float(request['target_temp'])
         return termo_c
 
-    def change_termo_config(self, data):
+    def change_termo_config(self, data, user):
         command = self.CM_CHANGE_CONFIG
         l = []
         for key, val in data.items():
             l.append(str(key) + '=' + str(val))
-        command += ';'.join(l)
-        self.send(command)
+        command += '&'.join(l)
+        #добавление хэша
+        data = '{0};{1}'.format(command, user.extendeduser.secret_key)
+        data = '{0}&hash={1}'.format(command, hashlib.sha1(data.encode()).hexdigest())
+        self.send(data)
 
     def send_update_request(self):
         command = self.CM_NEED_DATA
@@ -219,7 +227,7 @@ class Client:
     def send(self, data):
         if type(data) == str:
             data = data.encode()
-        print(data)
+        print('send:', data)
         # if not self.connection in self.server.outputs:
         #     self.server.outputs.append(self.connection)
         self.q.put(data + b'\n')

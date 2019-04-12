@@ -66,18 +66,24 @@ void checkActive()                                              //Проверк
 }
 void checkTemp()
 {
-  if (needTempChanged)
+  if (needTempChanged){
     changeWebTargetTemp = true;
+    needTempChangeTime = millis();
+  }
+  if (enable != ENABLED){
+    if (isWork)
+      RelayOff();
+    needTempChanged = false;
+    return;
+  }
   if(!isWork && ((needTemp - hysteresis > temp && !needTempChanged)||(needTemp > temp && needTempChanged)))     //Гистерезис применяется только если необходимая температура не была изменена
   {            
-    digitalWrite(RELE_PIN, HIGH);                                                   //Включение реле
-    isWork = true;
+    RelayOn();
     releTimer = millis() + WORK_COUNTER_DELAY*1000;
   }
   else if(isWork && needTemp <= temp)
   {
-    digitalWrite(RELE_PIN, LOW);                                                    //Отключение реле
-    isWork = false;
+    RelayOff();
     //powerTime += getSecond(WORK_COUNTER_DELAY*1000 - (releTimer - millis()));
     //SaveLong(A_POWER_TIME, powerTime);
     float kwt = getKWtH(getSecond(WORK_COUNTER_DELAY*1000 - (releTimer - millis())));

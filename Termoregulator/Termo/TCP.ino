@@ -1,6 +1,6 @@
 #define TCP_RECONN_DELAY  30 //sec
 
-#define TCP_SEND_DATA_DELAY   30//sec
+#define TCP_SEND_DATA_DELAY   60//sec
 
 unsigned long int tcpTimer = 0;
 bool sendData = false;
@@ -39,11 +39,14 @@ void TcpLoop(){
       Error = true;
       tftUpdateData();
     }
+
     //Переподключение
     if (tcpTimer + TCP_RECONN_DELAY*1000 < millis()){
       if(!client.connect(serverAddress, 10002)){
         tcpTimer = millis();
         Serial.println("Connect failed");
+        Error = true;
+        tftUpdateData();
       }
     }
     return;
@@ -58,9 +61,11 @@ void TcpLoop(){
   }
   //Скидываем данные на сервер в определенном интервале
   if (tcpTimer + TCP_SEND_DATA_DELAY*1000 < millis()){
-    tcpTimer = millis();
     SendDataToServer();
   }
+  // Если температура была изменена отправляем на сервер
+  if (changeWebTargetTemp && needTempChangeTime + NEED_TEMP_CHANGE_REQ_DELAY * 1000 < millis())
+    SendDataToServer();
   //Отправляем сообщение, если есть
   if (sendData){
     client.println(dataToSend);
@@ -90,18 +95,44 @@ void TcpGet(String data){
 
   if (command == "ChangeConfig"){
     String fields = SplitRight(data, ':');
+    String checkStr = data.substring(0, data.lastIndexOf('&')) + ";" + secret_key;
+    Serial.println("check: " + checkStr);
+
+    float needTempTmp = -1;
+    String UniqueIdTmp = "-1";
+    byte enableTmp = 255;
+    
     while(fields.length() > 0){
-      String field = SplitLeft(fields, ';');
+      String field = SplitLeft(fields, '&');
       
       String key = SplitLeft(field, '='), value = SplitRight(field, '=');
       Serial.println(key + " = " + value);
       if (key == "target_temp"){
-        needTemp = value.toFloat();
-        needTempChanged = true;
+        needTempTmp = value.toFloat();
       }
       else if (key == "string_id")
-        UniqueId = value;
-      fields = SplitRight(fields, ';');
+        UniqueIdTmp = value;
+      else if (key == "enable"){
+        if (value == "True")
+          enableTmp = ENABLED;
+        else
+          enableTmp = DISABLED;
+      }
+      else if (key == "hash"){
+        if (sha1(checkStr) == value){
+          if (needTempTmp != -1){
+            needTemp = needTempTmp;
+            needTempChanged = true;
+          }
+          if (UniqueIdTmp != "-1")
+            UniqueId = UniqueIdTmp;
+          if (enableTmp != 255)
+            enable = enableTmp;
+        }
+        else
+          Serial.println("Hash not equals");
+      }
+      fields = SplitRight(fields, '&');
    }
    SaveParams();
  }
@@ -131,6 +162,12 @@ void SendDataToServer(){
   data.AddField("target_temp", String(needTemp));
   data.AddField("humidity", String(humidity));
   data.AddField("KWatts", String(KWt));
+  if (enable == ENABLED)
+    data.AddField("enable", "True");
+  else
+    data.AddField("enable", "False");
+
+  data.AddField("ChangeEnable", "False");
 
   if (changeWebTargetTemp){
     data.AddField("ChangeTargetTemp", "True");
@@ -141,4 +178,6 @@ void SendDataToServer(){
   data.AddField("hash", sha1(command + ":" + data.get() + ";" + secret_key));
 
   TcpSend(command + ":" + data.get());
+
+  tcpTimer = millis();
 }

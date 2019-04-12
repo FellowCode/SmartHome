@@ -51,7 +51,6 @@ def user_account(request):
         for device in device_list:
             client = main.server.find_client_by_id(device.id)
             if client:
-                print(client.id)
                 client.send_update_request()
         ext_user = user.extendeduser
         return render(request, 'Account/UserAccount.html', {'device_list': device_list, 'ext_user': ext_user})

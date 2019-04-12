@@ -22,8 +22,49 @@
                 <div class="col s12">
                     <h5 class="divices">Ваши устройства</h5>
                 </div>
-                <div class="col s12">
-
+                <div id="device-list" class="col s12">
+                    {% csrf_token %}
+                    {% for device in device_list %}
+                        <div data-id="{{ device.id }}" class="col s12 device no-padding">
+                            <div class="col s3">
+                                <div class="col s12 no-padding">
+                                    <div class="switch">
+                                        <label>
+                                            Off
+                                            <input type="checkbox" name="enable"
+                                                   {% if device.enabled %}checked{% endif %}>
+                                            <span class="lever"></span>
+                                            On
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col s12 image">
+                                    <img alt class="responsive-img" src="{% static 'img/termo1.jpeg' %}">
+                                </div>
+                            </div>
+                            <div class="col s9">
+                                <h5 class="name">{{ device.custom_name }}</h5>
+                            </div>
+                            <div class="col s9">
+                                <div class="col s12">
+                                    <h6>Температура: {{ device.temp }}</h6>
+                                </div>
+                                <div class="col s12 target-temp">
+                                    Установлено:
+                                    <div class="input-field inline">
+                                        <input class="target-temp" type="number" name="target_temp" step="0.1"
+                                               value="{{ device.target_temp }}">
+                                    </div>
+                                </div>
+                                <div class="col s12">
+                                    <h6>Влажность: {{ device.humidity }}%</h6>
+                                </div>
+                                <div class="col s12">
+                                    <h6>Киловат: {{ device.KWatts }} КВт</h6>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -31,4 +72,5 @@
 {% endblock content %}
 
 {% block script %}
+    <script type="text/javascript" src="{% static 'js/userAccount.js' %}"></script>
 {% endblock %}

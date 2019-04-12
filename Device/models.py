@@ -8,6 +8,8 @@ class Termocontroller(models.Model):
 
     string_id = models.CharField(max_length=50, null=True, blank=True, unique=True)
 
+    enabled = models.BooleanField(default=True)
+
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
 
     model_name = models.ForeignKey('TermocontrollerName', on_delete=models.PROTECT, blank=True, null=True)
@@ -27,6 +29,15 @@ class Termocontroller(models.Model):
         super().__init__(*args, **kwargs)
         if not self.string_id:
             self.string_id = str(uuid.uuid4())
+
+    def save(self, *args, **kwargs):
+        if not self.custom_name or self.custom_name == '':
+            self.custom_name = str(self.model_name)
+        super(Termocontroller, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return str(self.user.username) + ' - ' + str(self.custom_name)
+
 
 
 class TermocontrollerName(models.Model):

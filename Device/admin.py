@@ -3,8 +3,8 @@ from .models import *
 
 @admin.register(Termocontroller)
 class TermocontrollerAdmin(admin.ModelAdmin):
-    pass
+    readonly_fields = ['time_get_data']
 
 @admin.register(TermocontrollerName)
-class TermocontrollerAdmin(admin.ModelAdmin):
+class TermocontrollerNameAdmin(admin.ModelAdmin):
     pass
