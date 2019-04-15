@@ -1,6 +1,6 @@
-#define TCP_RECONN_DELAY  30 //sec
+#define TCP_RECONN_DELAY  60 //sec
 
-#define TCP_SEND_DATA_DELAY   60//sec
+#define TCP_SEND_DATA_DELAY   120//sec
 
 unsigned long int tcpTimer = 0;
 bool sendData = false;

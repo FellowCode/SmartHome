@@ -10,7 +10,12 @@
         <div class="row">
             <form action="/account/signin/" method="post">
                 {% csrf_token %}
-                <div class="col s12 m8 offset-m2 l6 offset-l3 xl4 offset-xl4 signup z-depth-1">
+                <div class="col s12 m8 offset-m2 l6 offset-l3 xl4 offset-xl4 signup z-depth-1 no-padding">
+                    {% if email_confirm %}
+                        <div class="col s12 no-padding email-confirm">
+                            <p class="center-align">Почта успешно подтверждена</p>
+                        </div>
+                    {% endif %}
                     <h3 class="title center-align dark-text-color">Авторизация</h3>
                     <h6 class="error center-align">{{ error }}</h6>
                     <div class="row">

@@ -8,34 +8,37 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from SmartHome.settings import *
 
+def generate_key(length, unique_field='', model=None):
+    key = ''
+    for i in range(length):
+        key += random.choice(SYMBOLS_FOR_KEY)
+    filter = {unique_field: key}
+    if len(unique_field) > 0 and model:
+        while model.objects.filter(filter).exists():
+            key = generate_key(length)
+            filter = {unique_field: key}
+    return key
+
 class ExtendedUser(models.Model):
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    api_key = models.CharField(max_length=32, unique=True)
+    is_confirmed = models.BooleanField(default=False)
 
-    secret_key = models.CharField(max_length=32)
+    #подтверждение почты, восстановление почты
+    token = models.CharField(max_length=32, default=generate_key(length=16))
+    token_date = models.DateTimeField(auto_now_add=True)
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        #Генерирование уникального api ключа
-        if not self.api_key:
-            while True:
-                api_key = ''
-                for i in range(10):
-                    api_key += random.choice(SYMBOLS_FOR_KEY)
-                # Проверка на уникальность
-                if not ExtendedUser.objects.filter(api_key=api_key).exists():
-                    self.api_key = api_key
-                    break
+    api_key = models.CharField(max_length=32, unique=True, default=generate_key(length=10, unique_field='api_key'))
 
-        if not self.secret_key:
-            secret_key = ''
-            for i in range(10):
-                secret_key += random.choice(SYMBOLS_FOR_KEY)
-            self.secret_key = secret_key
+    secret_key = models.CharField(max_length=32, default=generate_key(length=10))
 
     def __str__(self):
         return str(self.user.username)
+
+def generate_key_tmp(**kwargs):
+    kwargs['model'] = ExtendedUser
+    return generate_key(**kwargs)
 
 
 @receiver(post_save, sender=User)

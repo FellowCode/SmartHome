@@ -797,3 +797,22 @@ INFO:root:Server started: '2019.04.12 21:07'
 INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
 INFO:root:Server started: '2019.04.12 21:08'
 INFO:root:Server started: '2019.04.12 21:26'
+INFO:root:Server started: '2019.04.14 13:52'
+INFO:root:Server started: '2019.04.14 13:52'
+INFO:root:Server started: '2019.04.14 13:54'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SmartHome\settings.py changed, reloading.
+INFO:root:Server started: '2019.04.14 16:03'
+ERROR:django.request:Internal Server Error: /account/signin/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 39, in signin
+    if request.session.haskey('email_confirm'):
+AttributeError: 'SessionStore' object has no attribute 'haskey'
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.14 19:41'

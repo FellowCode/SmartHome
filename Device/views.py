@@ -6,7 +6,6 @@ from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from .models import *
 
 def change_termo(requset):
-
     if requset.method == 'POST':
         import Main.views as main
         print(requset.POST)

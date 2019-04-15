@@ -135,6 +135,7 @@ void setup() {
   }*/
   EEPROM.begin(512);
   Serial.begin(115200);
+  RelaySetup();
   //setTime(0, 0, 0, 1, 1, 2018);
   //SaveDateTime();
   LoadDateTime();
