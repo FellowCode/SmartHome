@@ -16,13 +16,14 @@ from django.contrib.auth import authenticate
 from Device.models import TermocontrollerName, Termocontroller
 from SmartHome.settings import *
 import json
+import SmartHome.utils as utils
 
 
-# Логирование
-logging.basicConfig(filename='server.log', level=logging.DEBUG)
+
 
 class Server(Thread):
     clients = {}
+    clients_by_id = {}
 
     inputs = []
     outputs = []
@@ -30,6 +31,7 @@ class Server(Thread):
     def __init__(self):
         super().__init__()
         self.start_server()
+        self.daemon = True
 
     def start_server(self):
         host = SERVER_ADDRESS  # 62.109.29.169
@@ -38,7 +40,6 @@ class Server(Thread):
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.server.setblocking(False)
-        self.server.settimeout(0)
 
         try:
             self.server.bind((host, port))
@@ -56,8 +57,13 @@ class Server(Thread):
         # Мониторинг сокетов
 
         while self.inputs:
+            #Проверка не была ли добавлена команда для клиента
+            for device_id, command in utils.clients_cm_buffer.items():
+                if len(command) > 0:
+                    utils.clients_cm_buffer[device_id] = self.clients_by_id[device_id].new_command(command)
+
             readable, writable, exceptional = select.select(
-                self.inputs, self.outputs, self.inputs)
+                self.inputs, self.outputs, self.inputs, 0.005)
             for s in readable:
                 # Входящие данные
 
@@ -65,11 +71,10 @@ class Server(Thread):
                     # Если от сокета сервера, принимаем подключение
                     connection, client_address = s.accept()
                     connection.setblocking(False)
-                    connection.settimeout(0)
                     print('Conn adress: ', ':'.join(map(str, client_address)))
                     self.inputs.append(connection)
-                    self.outputs.append(connection)
-                    self.clients[connection] = Client(self, connection, client_address)
+                    client = Client(self, connection, client_address)
+                    self.clients[connection] = client
                 else:
                     # Если от сокета клиента, принимаем данные
                     try:
@@ -91,24 +96,20 @@ class Server(Thread):
                     if not self.clients[s].q.empty():
                         next_msg = self.clients[s].q.get_nowait()
                         s.send(next_msg)
+                    else:
+                        self.outputs.remove(s)
                 except:
                     self.client_disconnect(s)
 
             for s in exceptional:
                 # При ошибке на сокете исключаем его
                 self.client_disconnect(s)
-            sleep(0.01)
 
     def get_client_list(self):
         addresses = []
         for conn, client in self.clients.items():
             addresses.append(client.get_adress())
         return addresses
-
-    def find_client_by_id(self, id):
-        for conn, client in self.clients.items():
-            if client.id == id:
-                return client
 
 
     #Отключение клиента
@@ -118,7 +119,9 @@ class Server(Thread):
         self.inputs.remove(s)
         s.close()
         print(self.clients[s].get_address() + ' disconnected')
+        self.clients[s].on_disconnect()
         del self.clients[s]
+
 
     def stop_server(self):
         self.server.close()
@@ -129,6 +132,9 @@ class Client:
     work = True
     connection = None
     id = None
+
+
+    buffer = ''
 
     CM_NEED_DATA = 'SendCurrentData'
     CM_CHANGE_CONFIG = 'ChangeConfig:'
@@ -141,61 +147,64 @@ class Client:
         self.q = queue.Queue()
 
     def get_data_handler(self, data):
-        print(self.get_address() + ' > ' + str(data))
-        data = data.decode('utf-8').strip()
-        data_s = data.split(':')
-        command = data_s[0]
-        if command == 'ChangeValues':
-            check_str = data[:data.rfind('&')]
-            request = {}
-            field_list = data_s[1].split('&')
-            for field in field_list:
-                key, value = field.split('=')
-                request[key] = value
-            self.change_termo_values(request, check_str)
+        self.buffer += data.decode('utf-8')
+        while '\r\n' in self.buffer:
+            data = self.buffer[:self.buffer.find('\r\n')]
+            self.buffer = self.buffer[self.buffer.find('\r\n')+2:]
+            print(data)
+            data_s = data.strip().split(':')
+            command = data_s[0]
+            if command == 'ChangeValues':
+                check_str = data[:data.rfind('&')]
+                request = {}
+                field_list = data_s[1].split('&')
+                for field in field_list:
+                    key, value = field.split('=')
+                    request[key] = value
+                self.change_termo_values(request, check_str)
 
 
     def change_termo_values(self, request, check_str):
-        termo_c = None
         data = {}
         answer = 'AuthError'
-        user = User.objects.get(extendeduser__api_key=request['api_key'])
+        user = User.objects.filter(extendeduser__api_key=request['api_key']).first()
         if user:
             #Проверка данных хешированием с секретным ключом
             hash_str = check_str + ';' + user.extendeduser.secret_key
             hash = hashlib.sha1(hash_str.encode()).hexdigest()
             if request['hash'] == hash:
-                if ('init' in request and request['init'] == 'True'):
-                    termo_c = self.create_termo(request, user)
+                termo_c = Termocontroller.objects.filter(string_id=str(request['string_id'])).first()
+                if termo_c:
+                    if request['ChangeTargetTemp'] == 'True':
+                        termo_c.target_temp = float(request['target_temp'])
+                    if request['ChangeEnable'] == 'True':
+                        termo_c.enabled = request['enable'] == 'True'
+                else:
+                    termo_c = self.create_termo(request)
                     data['string_id'] = termo_c.string_id
-                if not termo_c:
-                    try:
-                        termo_c = Termocontroller.objects.get(string_id=str(request['string_id']))
-                    except:
-                        termo_c = self.create_termo(request, user)
-                        data['string_id'] = termo_c.string_id
-                    else:
-                        if request['ChangeTargetTemp'] == 'True':
-                            termo_c.target_temp = float(request['target_temp'])
-                        if request['ChangeEnable'] == 'True':
-                            termo_c.enabled = request['enable'] == 'True'
+
                 termo_c.temp = float(request['temp'])
                 termo_c.humidity = float(request['humidity'])
                 termo_c.KWatts = float(request['KWatts'])
-                termo_c.save()
                 if termo_c.enabled != (request['enable'] == 'True'):
                     data['enable'] = termo_c.enabled
                 if float(request['target_temp']) != float(termo_c.target_temp):
                     data['target_temp'] = termo_c.target_temp
                 if len(data) > 0:
                     self.change_termo_config(data, user)
-                self.id = termo_c.id
+                if not self.id:
+                    self.id = termo_c.id
+                    self.server.clients_by_id[self.id] = self
+                    utils.clients_cm_buffer[self.id] = ''
+                    termo_c.is_connected = True
+                    termo_c.user = user
+                termo_c.save()
                 return
             answer = 'HashCheckError'
         print('answer', answer)
         self.send(answer)
 
-    def create_termo(self, request, user):
+    def create_termo(self, request):
         model_name = request['model_name']
         try:
             name = TermocontrollerName.objects.get(name=model_name)
@@ -203,8 +212,8 @@ class Client:
             name = TermocontrollerName.objects.create(name=model_name)
             name.save()
         termo_c = Termocontroller.objects.create()
-        termo_c.user = user
         termo_c.model_name = name
+        termo_c.firmware_version = request['firmware_version']
         termo_c.target_temp = float(request['target_temp'])
         return termo_c
 
@@ -219,6 +228,14 @@ class Client:
         data = '{0}&hash={1}'.format(command, hashlib.sha1(data.encode()).hexdigest())
         self.send(data)
 
+    def on_disconnect(self):
+        if self.id:
+            del self.server.clients_by_id[self.id]
+            termo_c = Termocontroller.objects.filter(id=self.id).first()
+            if termo_c:
+                termo_c.is_connected = False
+                termo_c.save()
+
     def send_update_request(self):
         command = self.CM_NEED_DATA
         self.send(command)
@@ -231,6 +248,18 @@ class Client:
         # if not self.connection in self.server.outputs:
         #     self.server.outputs.append(self.connection)
         self.q.put(data + b'\n')
+        if not self.connection in self.server.outputs:
+            self.server.outputs.append(self.connection)
+
+    def new_command(self, command):
+        buffer = command[command.find('\n')+1:]
+        command = command[:command.find('\n')]
+
+        if command == 'UpdateData':
+            self.send_update_request()
+
+        return buffer
+
 
     def get_address(self):
         return str(self.ip) + ':' + str(self.port)

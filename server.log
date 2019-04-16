@@ -816,3 +816,534 @@ AttributeError: 'SessionStore' object has no attribute 'haskey'
 WARNING:django.request:Not Found: /favicon.ico
 INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
 INFO:root:Server started: '2019.04.14 19:41'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\urls.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\forms.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\forms.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SMTP\tasks.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\forms.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\forms.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SMTP\tasks.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SMTP\tasks.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\models.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\models.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+ERROR:django.request:Internal Server Error: /account/signin/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\fields\related_descriptors.py", line 393, in __get__
+    rel_obj = self.related.get_cached_value(instance)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\fields\mixins.py", line 13, in get_cached_value
+    return instance._state.fields_cache[cache_name]
+KeyError: 'extendeduser'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\backends\sqlite3\base.py", line 383, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.OperationalError: no such column: Account_extendeduser.restore_token
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 36, in signin
+    login(request, user)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\__init__.py", line 132, in login
+    user_logged_in.send(sender=user.__class__, request=request, user=user)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\dispatch\dispatcher.py", line 175, in send
+    for receiver in self._live_receivers(sender)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\dispatch\dispatcher.py", line 175, in <listcomp>
+    for receiver in self._live_receivers(sender)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\models.py", line 20, in update_last_login
+    user.save(update_fields=['last_login'])
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\contrib\auth\base_user.py", line 66, in save
+    super().save(*args, **kwargs)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 741, in save
+    force_update=force_update, update_fields=update_fields)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\base.py", line 790, in save_base
+    update_fields=update_fields, raw=raw, using=using,
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\dispatch\dispatcher.py", line 175, in send
+    for receiver in self._live_receivers(sender)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\dispatch\dispatcher.py", line 175, in <listcomp>
+    for receiver in self._live_receivers(sender)
+  File "D:\work\django\SmartHome\Account\models.py", line 55, in save_user_profile
+    instance.extendeduser.save()
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\fields\related_descriptors.py", line 401, in __get__
+    rel_obj = self.get_queryset(instance=instance).get(**filter_args)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 402, in get
+    num = len(clone)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 256, in __len__
+    self._fetch_all()
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 1242, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\query.py", line 55, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\models\sql\compiler.py", line 1097, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\backends\utils.py", line 99, in execute
+    return super().execute(sql, params)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\backends\utils.py", line 76, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\db\backends\sqlite3\base.py", line 383, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.OperationalError: no such column: Account_extendeduser.restore_token
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\models.py changed, reloading.
+WARNING:django.security.csrf:Forbidden (CSRF token missing or incorrect.): /account/signin/
+WARNING:django.security.csrf:Forbidden (CSRF token missing or incorrect.): /account/signin/
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 60, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'Main.views' has no attribute 'server'
+INFO:root:Server started: '2019.04.15 19:59'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.15 20:14'
+ERROR:django.request:Internal Server Error: /account/emailconfirm/again/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 91, in email_confirm_again
+    send_confirm_mail(user)
+  File "D:\work\django\SmartHome\SMTP\tasks.py", line 24, in send_confirm_mail
+    msg.send(fail_silently=False)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\mail\message.py", line 291, in send
+    return self.get_connection(fail_silently).send_messages([self])
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\mail\backends\smtp.py", line 110, in send_messages
+    sent = self._send(message)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\mail\backends\smtp.py", line 126, in _send
+    self.connection.sendmail(from_email, recipients, message.as_bytes(linesep='\r\n'))
+  File "C:\Users\sergo\AppData\Local\Programs\Python\Python37-32\lib\smtplib.py", line 867, in sendmail
+    raise SMTPSenderRefused(code, resp, from_addr)
+smtplib.SMTPSenderRefused: (503, b'5.5.4 Error: send AUTH command first.', 'info@apex79.ru')
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SmartHome\urls.py changed, reloading.
+INFO:root:Server started: '2019.04.15 20:24'
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 60, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'Main.views' has no attribute 'server'
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 60, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'Main.views' has no attribute 'server'
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 60, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'Main.views' has no attribute 'server'
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 60, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'Main.views' has no attribute 'server'
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 60, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'Main.views' has no attribute 'server'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\urls.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 63, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'Main.views' has no attribute 'server'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SmartHome\settings.py changed, reloading.
+INFO:root:Server started: '2019.04.15 23:01'
+INFO:root:Server started: '2019.04.15 23:01'
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 63, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'Main.views' has no attribute 'server'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.15 23:02'
+INFO:root:Server started: '2019.04.15 23:02'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.15 23:02'
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 60, in user_account
+    print(timedif.hour)
+AttributeError: 'datetime.timedelta' object has no attribute 'hour'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.15 23:02'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.15 23:03'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.15 23:04'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.15 23:04'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.15 23:04'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.15 23:05'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.15 23:05'
+INFO:root:Server started: '2019.04.15 23:29'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Device\models.py changed, reloading.
+INFO:root:Server started: '2019.04.15 23:48'
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.16 00:53'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.16 00:55'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.16 00:58'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.16 00:59'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.16 00:59'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.16 01:00'
+INFO:root:Server started: '2019.04.16 01:02'
+ERROR:django.request:Internal Server Error: /device/change/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Device\views.py", line 17, in change_termo
+    client = main.server.find_client_by_id(termo_c.id)
+AttributeError: module 'Main.views' has no attribute 'server'
+ERROR:django.request:Internal Server Error: /device/change/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Device\views.py", line 17, in change_termo
+    client = main.server.find_client_by_id(termo_c.id)
+AttributeError: module 'Main.views' has no attribute 'server'
+INFO:root:Server started: '2019.04.16 01:12'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.16 01:28'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.16 01:30'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.16 01:30'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.16 01:30'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.16 01:31'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.16 01:32'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.16 01:32'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.16 01:32'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.16 01:32'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.16 02:20'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.16 02:21'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.16 02:23'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.16 02:25'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.16 02:26'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.16 02:26'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.16 02:27'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.16 02:27'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.16 02:27'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+INFO:root:Server started: '2019.04.16 02:28'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SmartHome\views.py changed, reloading.
+INFO:root:Server started: '2019.04.16 02:29'
+INFO:root:Server started: '2019.04.16 02:30'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SmartHome\settings.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SmartHome\views.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SmartHome\views.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SmartHome\views.py changed, reloading.
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 66, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'SmartHome.views' has no attribute 'server'
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 66, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'SmartHome.views' has no attribute 'server'
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 66, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'SmartHome.views' has no attribute 'server'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SmartHome\views.py changed, reloading.
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 66, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'SmartHome.views' has no attribute 'server'
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 66, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'SmartHome.views' has no attribute 'server'
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 66, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'SmartHome.views' has no attribute 'server'
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 66, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'SmartHome.views' has no attribute 'server'
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 66, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'SmartHome.views' has no attribute 'server'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SocketTCP\server.py changed, reloading.
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 66, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'SmartHome.views' has no attribute 'server'
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 66, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'SmartHome.views' has no attribute 'server'
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 66, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'SmartHome.views' has no attribute 'server'
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 66, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'SmartHome.views' has no attribute 'server'
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 66, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'SmartHome.views' has no attribute 'server'
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 66, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'SmartHome.views' has no attribute 'server'
+ERROR:django.request:Internal Server Error: /account/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Account\views.py", line 66, in user_account
+    client = main.server.find_client_by_id(device.id)
+AttributeError: module 'SmartHome.views' has no attribute 'server'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SmartHome\views.py changed, reloading.
+INFO:root:Server started: '2019.04.16 13:28'
+INFO:root:Server started: '2019.04.16 13:29'
+INFO:root:Server started: '2019.04.16 13:45'
+INFO:root:Server started: '2019.04.16 16:35'
+WARNING:django.request:Not Found: /favicon.ico
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.16 16:41'
+INFO:root:Server started: '2019.04.16 16:45'
+INFO:root:Server started: '2019.04.16 16:45'
+INFO:root:Server started: '2019.04.16 16:48'
+ERROR:django.request:Internal Server Error: /device/change/
+Traceback (most recent call last):
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "D:\work\django\SmartHome\venv\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\work\django\SmartHome\Device\views.py", line 17, in change_termo
+    client = main.server.find_client_by_id(termo_c.id)
+AttributeError: module 'Main.views' has no attribute 'server'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Device\views.py changed, reloading.
+INFO:root:Server started: '2019.04.16 16:52'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\Account\views.py changed, reloading.
+INFO:root:Server started: '2019.04.16 18:28'
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SmartHome\__init__.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SmartHome\urls.py changed, reloading.
+INFO:django.utils.autoreload:D:\work\django\SmartHome\SmartHome\urls.py changed, reloading.

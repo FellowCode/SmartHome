@@ -38,6 +38,16 @@ void SaveByte(int addr, byte val){
 byte LoadByte(int addr){
   return EEPROM.read(addr);
 }
+void SaveIpAddress(int addr, IPAddress ip){
+  for (int i=0; i<4; i++)
+    SaveByte(addr + i, ip[i]);
+}
+IPAddress LoadIpAddress(int addr){
+  byte parts[4];
+  for (int i=0; i<4; i++)
+    parts[i] = LoadByte(addr + i);
+  return IPAddress(parts[0], parts[1], parts[2], parts[3]);
+}
 void SaveFloat(int addr, float val)
 {
   byte raw[4];

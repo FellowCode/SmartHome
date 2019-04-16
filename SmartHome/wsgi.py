@@ -10,6 +10,8 @@ https://docs.djangoproject.com/en/2.2/howto/deployment/wsgi/
 import os
 
 from django.core.wsgi import get_wsgi_application
+import SocketTCP.server
+from SmartHome.settings import SERVER_ON
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'SmartHome.settings')
 

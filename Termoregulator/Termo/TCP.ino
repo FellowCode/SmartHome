@@ -12,21 +12,6 @@ bool connToServer = false;
 
 WiFiClient client;
 
-String SplitLeft(String value, char c){
-  int i = value.indexOf(c);
-  if (i>0)
-    return  value.substring(0, i);
-  else
-    return value;
-}
-String SplitRight(String value, char c){
-  int i = value.indexOf(c);
-  if (i>0)
-    return  value.substring(i+1);
-  else
-    return "";
-}
-
 void TcpLoop(){
   
   if (!clientIsConnected)
@@ -52,7 +37,8 @@ void TcpLoop(){
     return;
   }
   if (!connToServer){
-     Serial.println("Connected to server");
+     Serial.print("Connected to server: ");
+     Serial.println(serverAddress);
      connToServer = true;
      SendDataToServer();
      tcpTimer = millis();
@@ -126,8 +112,10 @@ void TcpGet(String data){
           }
           if (UniqueIdTmp != "-1")
             UniqueId = UniqueIdTmp;
-          if (enableTmp != 255)
+          if (enableTmp != 255){
             enable = enableTmp;
+            checkTemp();
+          }
         }
         else
           Serial.println("Hash not equals");
@@ -158,6 +146,7 @@ void SendDataToServer(){
   data.AddField("api_key", api_key);
 
   data.AddField("model_name", deviceModelName);
+  data.AddField("firmware_version", deviceFirmware);
   data.AddField("temp", String(temp));
   data.AddField("target_temp", String(needTemp));
   data.AddField("humidity", String(humidity));

@@ -89,6 +89,7 @@ void WiFiDisconnect()
   clientOn = false;
   clientIsConnected = false;
   tftUpdateData();
+  SaveParams();
 }
 void WiFiClientLoop()
 {

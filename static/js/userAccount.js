@@ -1,8 +1,21 @@
 var csrf;
 $(document).ready(function () {
     csrf = $('input[name=csrfmiddlewaretoken]').val();
+    var keyHide = true;
 
     listItemInit();
+
+    $('a#keys-show').click(function () {
+        if (keyHide) {
+            $(this).parent().find('.keys').css('display', 'block');
+            $(this).html('Скрыть ключи');
+        }
+        else {
+            $(this).parent().find('.keys').css('display', 'none');
+            $(this).html('Показать ключи');
+        }
+        keyHide = !keyHide;
+    });
 
     var timerId = setInterval(updateDeviceData, 10000);
 });
@@ -16,7 +29,8 @@ function sendChangeRequest(deviceBlock) {
 
     var post = $.post("/device/change/", data);
 }
-function listItemInit(){
+
+function listItemInit() {
     $('input[name=target_temp]').focusout(function () {
         sendChangeRequest($(this).closest('.device'));
     });
@@ -24,6 +38,7 @@ function listItemInit(){
         sendChangeRequest($(this).closest('.device'));
     });
 }
+
 function updateDeviceData() {
-    $('#device-list').load("/account/ #device-list", listItemInit);
+    $('#device-list').load("/account/ #device-list-result", listItemInit);
 }

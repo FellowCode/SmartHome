@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}SmartHome: Регистрация{% endblock %}
+{% block title %}SmartHome: Личный кабинет{% endblock %}
 
 {% block stylesheet %}
 {% endblock %}
@@ -14,62 +14,79 @@
                         <p>Почта успешно подтверждена</p>
                     </div>
                 {% endif %}
-                <div class="col s12">
-                    <h4 class="title">Личный кабинет</h4>
-                </div>
-                <div class="col s12">
-                    <h6 class="username">{{ request.user.username }}</h6>
-                    <h6 class="name">{{ request.user.first_name }} {{ request.user.last_name }}</h6>
-                    <h6>Api key: {{ ext_user.api_key }}</h6>
-                    <h6>Secret key: {{ ext_user.secret_key }}</h6>
-                    <a href="#" class="btn waves-effect main-bg-color personal-data">Изменить</a>
-                </div>
-                <div class="col s12">
-                    <h5 class="divices">Ваши устройства</h5>
-                </div>
-                <div id="device-list" class="col s12">
-                    {% csrf_token %}
-                    {% for device in device_list %}
-                        <div data-id="{{ device.id }}" class="col s12 device no-padding">
-                            <div class="col s3">
-                                <div class="col s12 no-padding">
-                                    <div class="switch">
-                                        <label>
-                                            Off
-                                            <input type="checkbox" name="enable"
-                                                   {% if device.enabled %}checked{% endif %}>
-                                            <span class="lever"></span>
-                                            On
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col s12 image">
-                                    <img alt class="responsive-img" src="{% static 'img/termo1.jpeg' %}">
-                                </div>
-                            </div>
-                            <div class="col s9">
-                                <h5 class="name">{{ device.custom_name }}</h5>
-                            </div>
-                            <div class="col s9">
-                                <div class="col s12">
-                                    <h6>Температура: {{ device.temp }}</h6>
-                                </div>
-                                <div class="col s12 target-temp">
-                                    Установлено:
-                                    <div class="input-field inline">
-                                        <input class="target-temp" type="number" name="target_temp" step="0.1"
-                                               value="{{ device.target_temp }}">
-                                    </div>
-                                </div>
-                                <div class="col s12">
-                                    <h6>Влажность: {{ device.humidity }}%</h6>
-                                </div>
-                                <div class="col s12">
-                                    <h6>Киловат: {{ device.KWatts }} КВт</h6>
-                                </div>
+                {% if not user.extendeduser.is_confirmed %}
+                    <div class="col s12 mail-no-confirm no-padding">
+                        <p>Почта не подтверждена. <a href="/account/emailconfirm/again/">Отправить письмо еще раз</a>
+                        </p>
+                    </div>
+                {% endif %}
+                <div class="col s12 content">
+                    <div class="col s12">
+                        <h4 class="title">Личный кабинет</h4>
+                    </div>
+                    <div class="col s12">
+                        <h6 class="username">{{ request.user.username }}</h6>
+                        <h6 class="name">{{ request.user.first_name }} {{ request.user.last_name }}</h6>
+                        <a href="#" class="personal-data">Изменить</a>
+                        <div class="keys-container">
+                            <a id="keys-show" href="#">Показать ключи</a>
+                            <div class="keys">
+                                <h6>Api key: {{ ext_user.api_key }}</h6>
+                                <h6>Secret key: {{ ext_user.secret_key }}</h6>
                             </div>
                         </div>
-                    {% endfor %}
+                    </div>
+                    <div class="col s12">
+                        <h5 class="divices">Ваши устройства</h5>
+                    </div>
+                    <div id="device-list" class="col s12">
+                        <div id="device-list-result" class="col s12 no-padding">
+                            {% csrf_token %}
+                            {% for device in device_list %}
+                                <div data-id="{{ device.id }}" class="col s12 device no-padding">
+                                    <div class="col s3">
+                                        <div class="col s12 no-padding">
+                                            <div class="switch">
+                                                <label>
+                                                    Off
+                                                    <input type="checkbox" name="enable"
+                                                           {% if device.enabled %}checked{% endif %}>
+                                                    <span class="lever"></span>
+                                                    On
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col s12 image">
+                                            <img alt class="responsive-img" src="{% static 'img/termo1.jpeg' %}">
+                                        </div>
+                                    </div>
+                                    <div class="col s9">
+                                        <h5 class="name">{% if not device.is_connected %}
+                                            <i class="status-error material-icons">error_outline</i>{% endif %}{{ device.custom_name }}
+                                        </h5>
+                                    </div>
+                                    <div class="col s9">
+                                        <div class="col s12">
+                                            <h6>Температура: {{ device.temp }}</h6>
+                                        </div>
+                                        <div class="col s12 target-temp">
+                                            Установлено:
+                                            <div class="input-field inline">
+                                                <input class="target-temp" type="number" name="target_temp" step="0.1"
+                                                       value="{{ device.target_temp }}">
+                                            </div>
+                                        </div>
+                                        <div class="col s12">
+                                            <h6>Влажность: {{ device.humidity }}%</h6>
+                                        </div>
+                                        <div class="col s12">
+                                            <h6>Киловат: {{ device.KWatts }} КВт</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

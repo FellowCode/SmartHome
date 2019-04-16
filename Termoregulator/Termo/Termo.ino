@@ -69,9 +69,10 @@ String secret_key = "";
 String UniqueId = "";
 String webServerUrl = "http://192.168.0.102:8000/";
 
-IPAddress serverAddress(192,168,0,102);
+IPAddress serverAddress(62,109,29,169);
 
 String deviceModelName = "TermoController-battery v1.0";
+String deviceFirmware = "TermoC_v1";
 bool changeWebTargetTemp = false;
 bool Error = false;
 
@@ -95,7 +96,8 @@ IPAddress routerIP(192,168,0,1);
 #define A_SECRET_KEY     146         // 32 byte
 #define A_UNIQUE_ID      178         // 36 byte
 #define A_WIFI_STATUS    214         // 1 byte
-#define A_ENABLE    215         // 1 byte
+#define A_ENABLE         215         // 1 byte
+#define A_SERVER_IP      216         // 4 byte
 
 ////***DEFAULT PARAMS****////
 
@@ -125,7 +127,7 @@ bool tftChangeMode = false;
 
 byte currentDay;
 
-const char* brandName = "SmaHou";
+const char* brandName = "Guraton";
 const char* deviceName = "Termo_R.00";
 #include "user_interface.h"
 void setup() {
@@ -149,6 +151,7 @@ void setup() {
   //SaveParams();
   //SaveStatistic(A_STATISTIC);
   LoadParams();
+  //serverAddress = IPAddress(62,109,29,169);
   if (WiFiOn){
     WiFiConnect();
   }
@@ -174,94 +177,11 @@ void loop()
   checkDay();
 }
 
-
-///***********************///
-///ANOTHER
-///***********************///
-
-float getKWtH(int timeSec)
-{
-  return timeSec/60.0/60.0*watts/1000.0;
-}
-int getSecond(long milsec)
-{
-  return milsec/1000;
-}
-float getMax(float a[])
-{
-   float max = -100000;
-   for(int i=0; i<sizeof(a); i++)
-    if(a[i] > max)
-      max = a[i];
-   return max;
-}
-float getMin(float a[])
-{
-   float min = 100000;
-   for(int i=0; i<sizeof(a); i++)
-    if(a[i] < min)
-      min = a[i];
-   return min;
-}
-
-
 ///************************///
 ///INITIALIZATION
 ///************************///
-void resetStatistic()
-{
-  for(int i=0; i<7; i++)
-    statistic[i] = 0;
-  SaveStatistic(A_STATISTIC);
-}
-void LoadParams()
-{
-  KWt = LoadFloat(A_KWT);  
-  needTemp = LoadFloat(A_NEED_TEMP); 
-  tftActiveTime = LoadInt(A_TFT_ACTIVE);
-  watts = LoadInt(A_WATTS);
-  hysteresis = LoadFloat(A_HYSTERESIS);
-  LoadStatistic(A_STATISTIC);
-  clientSSID = LoadString(A_SSID);
-  clientPassword = LoadString(A_PASSWORD);
-  UniqueId = LoadString36(A_UNIQUE_ID);
-  api_key = LoadString(A_API_KEY);
-  secret_key = LoadString(A_SECRET_KEY);
-  WiFiOn = LoadByte(A_WIFI_STATUS) == 1;
-  enable = LoadByte(A_ENABLE);
-}
-void resetParams()
-{
-  needTemp = 22.0f;
-  tftActiveTime = 60;
-  watts = 2000;
-  hysteresis = 0.1;
-  KWt = 0.0;
-  clientSSID = "";
-  clientPassword = "";
-  UniqueId = "";
-  api_key = "";
-  secret_key = "";
-  WiFiOn = false;
-  enable = ENABLED;
-  SaveParams();
-  ESP.restart();
-}
-void SaveParams()
-{
-  SaveFloat(A_KWT, KWt);
-  SaveFloat(A_NEED_TEMP, needTemp); 
-  SaveInt(A_TFT_ACTIVE, tftActiveTime);
-  SaveInt(A_WATTS, watts);
-  SaveFloat(A_HYSTERESIS, hysteresis);
-  SaveString(A_SSID, clientSSID);
-  SaveString(A_PASSWORD, clientPassword);
-  SaveString36(A_UNIQUE_ID, UniqueId);
-  SaveString(A_API_KEY, api_key);
-  SaveString(A_SECRET_KEY, secret_key);
-  SaveByte(A_WIFI_STATUS, byte(WiFiOn && clientOn));
-  SaveByte(A_ENABLE, enable);
-}
+
+
 void btnSetup()
 {
   pinMode(BTN_PIN, INPUT);

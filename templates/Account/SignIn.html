@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}SmartHome: Регистрация{% endblock %}
+{% block title %}SmartHome: Вход{% endblock %}
 
 {% block stylesheet %}
 {% endblock %}
@@ -10,10 +10,15 @@
         <div class="row">
             <form action="/account/signin/" method="post">
                 {% csrf_token %}
-                <div class="col s12 m8 offset-m2 l6 offset-l3 xl4 offset-xl4 signup z-depth-1 no-padding">
+                <div class="col s12 m8 offset-m2 l6 offset-l3 xl4 offset-xl4 form z-depth-1 no-padding">
                     {% if email_confirm %}
                         <div class="col s12 no-padding email-confirm">
                             <p class="center-align">Почта успешно подтверждена</p>
+                        </div>
+                    {% endif %}
+                    {% if password_restored %}
+                        <div class="col s12 no-padding email-confirm">
+                            <p class="center-align">Пароль успешно изменен</p>
                         </div>
                     {% endif %}
                     <h3 class="title center-align dark-text-color">Авторизация</h3>
@@ -30,6 +35,11 @@
                             <input id="password" type="password" name="password"
                                    value="{{ form.password.value|default_if_none:"" }}">
                             <label for="password">Пароль</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s10 offset-s1">
+                            <a href="/account/restore/">Забыли пароль?</a>
                         </div>
                     </div>
                     <div class="col s8 offset-s2 m6 offset-m3 auth-btn">

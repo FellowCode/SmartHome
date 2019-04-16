@@ -20,14 +20,6 @@ void handleSetup()
   server.on("/resetParams/", hundleResetParams);
 }
 
-String IpAddress2String(const IPAddress& ipAddress)
-{
-  return String(ipAddress[0]) + String(".") +\
-  String(ipAddress[1]) + String(".") +\
-  String(ipAddress[2]) + String(".") +\
-  String(ipAddress[3])  ; 
-}
-
 /////************////////
 //   HUNDLES
 /////*************////////
@@ -49,7 +41,8 @@ void handleSendSettingsData()
   message += "WiFiSSID="+clientSSID + ";";
   message += "WiFiPassword="+clientPassword + ";";
   message += "api_key="+api_key + ";";
-  message += "secret_key"+secret_key + ";";
+  message += "secret_key="+secret_key + ";";
+  message += "server_ip="+IpAddress2String(serverAddress) + ";";
 
   server.send(200, "text/html", message);
 }
@@ -90,6 +83,8 @@ void handleSetSettingsData()
       setDate(server.arg(i));
      else if (key == "time")
       SetTime(server.arg(i));
+     else if (key == "server_ip")
+      serverAddress = String2IPAddress(server.arg(i));
 
   }
   SaveParams();

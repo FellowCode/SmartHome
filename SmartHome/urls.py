@@ -15,10 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from .views import *
+
+handler404 = 'SmartHome.views.handler404'
+handler500 = 'SmartHome.views.handler500'
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('Account.urls')),
     path('device/', include('Device.urls')),
+    path('startserver/', start_server),
     path('', include('Main.urls')),
 ]

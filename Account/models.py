@@ -25,9 +25,13 @@ class ExtendedUser(models.Model):
 
     is_confirmed = models.BooleanField(default=False)
 
-    #подтверждение почты, восстановление почты
+    #подтверждение почты
     token = models.CharField(max_length=32, default=generate_key(length=16))
     token_date = models.DateTimeField(auto_now_add=True)
+
+    #восстановление пароля
+    restore_token = models.CharField(max_length=32, default=generate_key(length=16))
+    restore_token_date = models.DateTimeField(auto_now_add=True)
 
     api_key = models.CharField(max_length=32, unique=True, default=generate_key(length=10, unique_field='api_key'))
 

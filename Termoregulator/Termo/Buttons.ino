@@ -164,8 +164,8 @@ void BtnDownWiFiSetup()
 void BtnSetWiFiSetup()
 {
   switch(settingSelect){
-    case WiFi_HOTSPOT: if(clientIsConnected) WiFiDisconnect(); if(!WiFiOn) CreateAP(); else StopAP(); break;
-    case WiFi_CLIENT: if(ApIsCreated) StopAP(); if(!WiFiOn) WiFiConnect(); else WiFiDisconnect();break;
+    case WiFi_HOTSPOT: if(clientIsConnected) WiFiDisconnect(); if(!WiFiOn) CreateAP(); else StopAP(); Error = false; break;
+    case WiFi_CLIENT: if(ApIsCreated) StopAP(); if(!WiFiOn) WiFiConnect(); else WiFiDisconnect(); Error = false; break;
   }
   tftDrawWiFiParam(WiFi_HOTSPOT);
   tftDrawWiFiParam(WiFi_CLIENT);

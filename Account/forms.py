@@ -43,11 +43,8 @@ class SignUpForm(forms.Form):
 
     def clean_email(self):
         email = self.cleaned_data['email']
-        try:
-            User.objects.get(username=email)
+        if User.objects.filter(username=email).exists():
             self.add_error('email', 'Такой email уже зарегистрирован')
-        except:
-            pass
         return email
 
 
@@ -69,3 +66,29 @@ class SignUpForm(forms.Form):
             if char in value:
                 return True
         return False
+
+class RestorePassForm(forms.Form):
+    email = forms.EmailField()
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        user = User.objects.filter(username=email).first()
+        if not user:
+            self.add_error('email', 'Такой email не зарегистрирован')
+        return email
+
+class RestorePassConfirmForm(forms.Form):
+    password = forms.CharField(max_length=256)
+    password_confirm = forms.CharField(max_length=256)
+
+    def clean_password(self):
+        password = self.cleaned_data['password']
+        if len(password) < 8:
+            self.add_error('password', 'В пароле менее 8 символов')
+        return password
+
+    def clean_password_confirm(self):
+        password = self.cleaned_data['password']
+        password_confirm = self.cleaned_data['password_confirm']
+        if password != password_confirm:
+            self.add_error('password_confirm', 'Пароли не совпадают')
