@@ -58,9 +58,9 @@ class Server(Thread):
 
         while self.inputs:
             #Проверка не была ли добавлена команда для клиента
-            for device_id, command in utils.clients_cm_buffer.items():
-                if len(command) > 0:
-                    utils.clients_cm_buffer[device_id] = self.clients_by_id[device_id].new_command(command)
+            # for device_id, command in utils.clients_cm_buffer.items():
+            #     if len(command) > 0:
+            #         utils.clients_cm_buffer[device_id] = self.clients_by_id[device_id].new_command(command)
 
             readable, writable, exceptional = select.select(
                 self.inputs, self.outputs, self.inputs, 0.005)
@@ -191,7 +191,7 @@ class Client:
                 if float(request['target_temp']) != float(termo_c.target_temp):
                     data['target_temp'] = termo_c.target_temp
                 if len(data) > 0:
-                    self.change_termo_config(data, user)
+                    self.change_termo_config(user, **data)
                 if not self.id:
                     self.id = termo_c.id
                     self.server.clients_by_id[self.id] = self
@@ -217,7 +217,7 @@ class Client:
         termo_c.target_temp = float(request['target_temp'])
         return termo_c
 
-    def change_termo_config(self, data, user):
+    def change_termo_config(self, user, **data):
         command = self.CM_CHANGE_CONFIG
         l = []
         for key, val in data.items():

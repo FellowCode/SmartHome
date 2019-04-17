@@ -54,12 +54,15 @@ def user_logout(request):
 
 def user_account(request):
     import SmartHome.utils as utils
+    import SmartHome.views as main
     user = request.user
     if user and user.is_authenticated:
         device_list = Termocontroller.objects.filter(user=user)
         for device in device_list:
-            if device.id in utils.clients_cm_buffer:
-                utils.clients_cm_buffer[device.id] += 'UpdateData\n'
+            # if device.id in utils.clients_cm_buffer:
+            #     utils.clients_cm_buffer[device.id] += 'UpdateData\n'
+            if main.server and device.id in main.server.clients_by_id:
+                main.server.clients_by_id[device.id].send_update_request()
         ext_user = user.extendeduser
         email_confirm = False
         if 'email_confirm' in request.session:
