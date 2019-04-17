@@ -26,5 +26,6 @@ urlpatterns = [
     path('account/', include('Account.urls')),
     path('device/', include('Device.urls')),
     path('startserver/', start_server),
+    path('stopserver/', stop_server),
     path('', include('Main.urls')),
 ]

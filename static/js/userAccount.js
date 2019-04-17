@@ -18,6 +18,12 @@ $(document).ready(function () {
     });
 
     var timerId = setInterval(updateDeviceData, 10000);
+
+    var notify = $('.green-notification');
+    if (notify.length){
+        setTimeout(animateClose.bind(null, notify), 5000);
+    }
+
 });
 
 function sendChangeRequest(deviceBlock) {
@@ -41,4 +47,10 @@ function listItemInit() {
 
 function updateDeviceData() {
     $('#device-list').load("/account/ #device-list-result", listItemInit);
+}
+
+function animateClose(element){
+    $(element).animate({height: 0}, 1000, function () {
+        $(this).remove()
+    })
 }

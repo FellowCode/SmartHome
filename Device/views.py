@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from .models import *
+from .forms import *
 
 
 def change_termo(requset):
@@ -28,3 +29,22 @@ def change_termo(requset):
             main.server.clients_by_id[termo_c.id].change_termo_config(termo_c.user, **data)
         return HttpResponse(status=200)
     return HttpResponse(status=404)
+
+def settings(request, id):
+    user = request.user
+
+    if user.is_authenticated:
+        termo_c = Termocontroller.objects.get(id=id)
+        if termo_c.user == user:
+            if request.method == 'POST':
+                form = SettingsForm(request.POST)
+                if form.is_valid():
+                    termo_c.custom_name = form.cleaned_data['custom_name']
+                    termo_c.save()
+                    request.session['settings_changed'] = True
+                    return redirect('/account/')
+                return render(request, 'Device/Settings.html', {'form': form})
+            form = SettingsForm(initial={'custom_name': termo_c.custom_name})
+            return render(request, 'Device/Settings.html', {'form': form})
+        return redirect('/account/')
+    return redirect('/account/signin/')

@@ -10,14 +10,19 @@
         <div class="row">
             <div class="col s12 m10 offset-m1 l8 offset-l2 xl6 offset-xl3 z-depth-1 user-account no-padding">
                 {% if email_confirm %}
-                    <div class="col s12 mail-confirm no-padding">
+                    <div class="col s12 green-notification no-padding">
                         <p>Почта успешно подтверждена</p>
                     </div>
                 {% endif %}
                 {% if not user.extendeduser.is_confirmed %}
-                    <div class="col s12 mail-no-confirm no-padding">
+                    <div class="col s12 red-notification no-padding">
                         <p>Почта не подтверждена. <a href="/account/emailconfirm/again/">Отправить письмо еще раз</a>
                         </p>
+                    </div>
+                {% endif %}
+                {% if settings_changed %}
+                    <div class="col s12 green-notification no-padding">
+                        <p>Настройки устройства сохранены</p>
                     </div>
                 {% endif %}
                 <div class="col s12 content">
@@ -31,8 +36,8 @@
                         <div class="keys-container">
                             <a id="keys-show" href="#">Показать ключи</a>
                             <div class="keys">
-                                <h6>Api key: {{ ext_user.api_key }}</h6>
-                                <h6>Secret key: {{ ext_user.secret_key }}</h6>
+                                <h6>Api key: {{ request.user.extendeduser.api_key }}</h6>
+                                <h6>Secret key: {{ request.user.extendeduser.secret_key }}</h6>
                             </div>
                         </div>
                     </div>
@@ -45,6 +50,9 @@
                             {% for device in device_list %}
                                 <div data-id="{{ device.id }}" class="col s12 device no-padding">
                                     <div class="col s3">
+                                        <div class="col s12 settings">
+                                            <a href="/device/settings/{{ device.id }}/"><i class="material-icons">settings</i></a>
+                                        </div>
                                         <div class="col s12 no-padding">
                                             <div class="switch">
                                                 <label>
@@ -56,6 +64,7 @@
                                                 </label>
                                             </div>
                                         </div>
+
                                         <div class="col s12 image">
                                             <img alt class="responsive-img" src="{% static 'img/termo1.jpeg' %}">
                                         </div>
@@ -94,5 +103,5 @@
 {% endblock content %}
 
 {% block script %}
-    <script type="text/javascript" src="{% static 'js/userAccount.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/userAccount.js' %}?version=2"></script>
 {% endblock %}

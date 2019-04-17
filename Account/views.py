@@ -9,6 +9,7 @@ from Device.models import Termocontroller
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from SMTP.tasks import *
+from time import sleep
 
 def signup(request):
     if request.method == 'POST':
@@ -56,19 +57,20 @@ def user_account(request):
     import SmartHome.utils as utils
     import SmartHome.views as main
     user = request.user
+    data = {}
     if user and user.is_authenticated:
         device_list = Termocontroller.objects.filter(user=user)
         for device in device_list:
-            # if device.id in utils.clients_cm_buffer:
-            #     utils.clients_cm_buffer[device.id] += 'UpdateData\n'
             if main.server and device.id in main.server.clients_by_id:
                 main.server.clients_by_id[device.id].send_update_request()
-        ext_user = user.extendeduser
-        email_confirm = False
+        data['device_list'] = device_list
         if 'email_confirm' in request.session:
-            email_confirm = True
+            data['email_confirm'] = True
             del request.session['email_confirm']
-        return render(request, 'Account/UserAccount.html', {'device_list': device_list, 'ext_user': ext_user, 'email_confirm': email_confirm})
+        if 'settings_changed' in request.session:
+            data['settings_changed'] = True
+            del request.session['settings_changed']
+        return render(request, 'Account/UserAccount.html', data)
     return redirect('/account/signin/')
 
 def email_confirm(request, user_id, token):

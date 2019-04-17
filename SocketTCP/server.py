@@ -104,6 +104,7 @@ class Server(Thread):
             for s in exceptional:
                 # При ошибке на сокете исключаем его
                 self.client_disconnect(s)
+            sleep(0.005)
 
     def get_client_list(self):
         addresses = []

@@ -28,3 +28,12 @@ def start_server(request):
         server.start()
         return render(request, 'device_data.html', {'data': 'Server started!'})
     return HttpResponse(status=404)
+
+def stop_server(request):
+    if request.user.is_superuser:
+        global server
+        if server:
+            server.stop_server()
+            server = None
+            return render(request, 'device_data.html', {'data': 'Server stoped!'})
+    return HttpResponse(status=404)

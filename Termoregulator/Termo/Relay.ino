@@ -5,11 +5,11 @@ void RelaySetup(){
 }
 
 void RelayOn(){
-  digitalWrite(RELEY_PIN, LOW);        //Включение реле
+  digitalWrite(RELEY_PIN, HIGH);        //Включение реле
   isWork = true;
 }
 
 void RelayOff(){
-  digitalWrite(RELEY_PIN, HIGH);      //Отключение реле
+  digitalWrite(RELEY_PIN, LOW);      //Отключение реле
   isWork = false;
 }

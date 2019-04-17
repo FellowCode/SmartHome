@@ -6,11 +6,14 @@
   h4.title{
     margin-bottom: 30px;
   }
-  .mail-confirm{
+  .green-notification{
     background-color: #6DDCBD;
     padding: 0 20px !important;
+    p{
+      overflow: hidden;
+    }
   }
-  .mail-no-confirm{
+  .red-notification{
     background-color: #f7a0ae;
     padding: 0 20px !important;
   }
@@ -39,6 +42,12 @@
         margin-right: 5px;
       }
 
+    }
+    .settings{
+      height: 42px;
+      a i{
+        margin-top: 10px;
+      }
     }
     .image{
       margin-top: 35px;

@@ -4,4 +4,5 @@ from .views import *
 
 urlpatterns = [
     path('change/', change_termo),
+    path('settings/<id>/', settings),
 ]
