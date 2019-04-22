@@ -48,7 +48,8 @@
                         <div id="device-list-result" class="col s12 no-padding">
                             {% csrf_token %}
                             {% for device in device_list %}
-                                <div data-id="{{ device.id }}" class="col s12 device no-padding">
+                                <!--PC version-->
+                                <div data-id="{{ device.id }}" class="col s12 device no-padding hide-on-small-only">
                                     <div class="col s3">
                                         <div class="col s12 settings">
                                             <a href="/device/settings/{{ device.id }}/"><i class="material-icons">settings</i></a>
@@ -93,6 +94,50 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!--Mobile version-->
+                                <div data-id="{{ device.id }}" class="col s12 device no-padding hide-on-med-and-up">
+                                    <div class="col s12">
+                                        <h5 class="name">{% if not device.is_connected %}
+                                            <i class="status-error material-icons">error_outline</i>{% endif %}{{ device.custom_name }}
+                                        </h5>
+                                    </div>
+                                    <div class="col s10">
+                                        <div class="switch">
+                                            <label>
+                                                Off
+                                                <input type="checkbox" name="enable"
+                                                       {% if device.enabled %}checked{% endif %}>
+                                                <span class="lever"></span>
+                                                On
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col s2">
+                                        <a href="/device/settings/{{ device.id }}/"><i class="material-icons">settings</i></a>
+                                    </div>
+                                    <div class="col s8 offset-s2">
+                                        <img alt class="responsive-img" src="{% static 'img/termo1.jpeg' %}">
+                                    </div>
+                                    <div class="col s12">
+                                        <div class="col s12">
+                                            <h6>Температура: {{ device.temp }}</h6>
+                                        </div>
+                                        <div class="col s12 target-temp">
+                                            Установлено:
+                                            <div class="input-field inline">
+                                                <input class="target-temp" type="number" name="target_temp" step="0.1"
+                                                       value="{{ device.target_temp }}">
+                                            </div>
+                                        </div>
+                                        <div class="col s12">
+                                            <h6>Влажность: {{ device.humidity }}%</h6>
+                                        </div>
+                                        <div class="col s12">
+                                            <h6>Киловат: {{ device.KWatts }} КВт</h6>
+                                        </div>
+                                    </div>
+                                </div>
+
                             {% endfor %}
                         </div>
                     </div>
