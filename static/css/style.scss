@@ -35,11 +35,13 @@ $xl_px: 1200px;
   background-color: white;
 }
 html{
-  background: url('/static/img/bg.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background: url('/static/img/bg.jpg') repeat-x center center fixed;
+  background-size: auto 100vh;
+}
+@media only screen and (max-width: $m_px){
+  html{
+    background-size: auto 140vh;
+  }
 }
 .container {
     width: 90%;

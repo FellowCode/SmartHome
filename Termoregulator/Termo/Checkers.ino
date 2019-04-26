@@ -122,13 +122,14 @@ void checkBtn()
         {
           //Какая кнопка нажата определяется по среднему арифметическому
           param = btnCheckerSum / btnChecker;
+          Serial.println(param);
           btnTimer = millis() + BTN_DELAY;
           btn = true;
-          if(param < 890)
+          if(param < 840)
             BtnMode();
-          else if(param < 930)
+          else if(param < 900)
             BtnSet();
-          else if(param < 1000)
+          else if(param < 980)
             BtnUp();
           else
             BtnDown();
