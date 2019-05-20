@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 
 from django.contrib.auth import authenticate
 
-from Device.models import TermocontrollerName, Termocontroller
+from Device.models import TermocontrollerName, Termocontroller, TermocontrollerFirmware, TermocontStatistic
 from SmartHome.settings import *
 import json
 import SmartHome.utils as utils
@@ -183,7 +183,10 @@ class Client:
                 else:
                     termo_c = self.create_termo(request)
                     data['string_id'] = termo_c.string_id
-
+                firmwware, created = TermocontrollerFirmware.objects.get_or_create(name=request['firmware_version'])
+                if created:
+                    firmwware.save()
+                termo_c.firmware_version = firmwware
                 termo_c.temp = float(request['temp'])
                 termo_c.humidity = float(request['humidity'])
                 termo_c.KWatts = float(request['KWatts'])
@@ -200,21 +203,27 @@ class Client:
                     termo_c.is_connected = True
                     termo_c.user = user
                 termo_c.save()
+                stat = TermocontStatistic.objects.create()
+                stat.device = termo_c
+                stat.temp = termo_c.temp
+                stat.humidity = termo_c.humidity
+                stat.save()
                 return
             answer = 'HashCheckError'
-        print('answer', answer)
         self.send(answer)
 
     def create_termo(self, request):
         model_name = request['model_name']
-        try:
-            name = TermocontrollerName.objects.get(name=model_name)
-        except:
-            name = TermocontrollerName.objects.create(name=model_name)
-            name.save()
+        firmware_version = request['firmware_version']
+        termo_name, created = TermocontrollerName.objects.get_or_create(name=model_name)
+        if created:
+            termo_name.save()
+        termo_firmware, created = TermocontrollerFirmware.objects.get_or_create(name=firmware_version)
+        if created:
+            termo_firmware.save()
         termo_c = Termocontroller.objects.create()
-        termo_c.model_name = name
-        termo_c.firmware_version = request['firmware_version']
+        termo_c.model_name = termo_name
+        termo_c.firmware_version = termo_firmware
         termo_c.target_temp = float(request['target_temp'])
         return termo_c
 
@@ -260,7 +269,6 @@ class Client:
             self.send_update_request()
 
         return buffer
-
 
     def get_address(self):
         return str(self.ip) + ':' + str(self.port)

@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from Account.models import ExtendedUser
 import uuid
+import datetime
 
 
 class Termocontroller(models.Model):
@@ -16,10 +17,9 @@ class Termocontroller(models.Model):
 
     model_name = models.ForeignKey('TermocontrollerName', on_delete=models.PROTECT, blank=True, null=True)
 
-    firmware_version = models.CharField(max_length=1024, null=True, blank=True)
+    firmware_version = models.ForeignKey('TermocontrollerFirmware', on_delete=models.PROTECT, blank=True, null=True)
 
     custom_name = models.CharField(max_length=100, blank=True, null=True)
-
 
     temp = models.DecimalField(max_digits=4, decimal_places=1, null=True, blank=True)
     target_temp = models.DecimalField(max_digits=4, decimal_places=1, null=True, blank=True)
@@ -50,3 +50,21 @@ class TermocontrollerName(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class TermocontrollerFirmware(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+
+class TermocontStatistic(models.Model):
+    device = models.ForeignKey(Termocontroller, on_delete=models.CASCADE)
+
+    date = models.DateTimeField(auto_now_add=True)
+
+    temp = models.DecimalField(max_digits=4, decimal_places=1)
+    humidity = models.DecimalField(max_digits=4, decimal_places=1)
+
+    def __str__(self):
+        return str(self.device.id) + str(datetime.datetime.strptime(self.date, '%m/%d/%y %H:%M:%S'))
