@@ -67,4 +67,4 @@ class TermocontStatistic(models.Model):
     humidity = models.DecimalField(max_digits=4, decimal_places=1)
 
     def __str__(self):
-        return str(self.device.id) + str(datetime.datetime.strptime(self.date, '%m/%d/%y %H:%M:%S'))
+        return 'id' + str(self.device.id) + ' ' + str(datetime.datetime.strftime(self.date, '%d.%m.%Y %H:%M:%S'))

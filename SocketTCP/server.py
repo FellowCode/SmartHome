@@ -187,6 +187,7 @@ class Client:
                 if created:
                     firmwware.save()
                 termo_c.firmware_version = firmwware
+                termo_c.user = user
                 termo_c.temp = float(request['temp'])
                 termo_c.humidity = float(request['humidity'])
                 termo_c.KWatts = float(request['KWatts'])
@@ -203,10 +204,7 @@ class Client:
                     termo_c.is_connected = True
                     termo_c.user = user
                 termo_c.save()
-                stat = TermocontStatistic.objects.create()
-                stat.device = termo_c
-                stat.temp = termo_c.temp
-                stat.humidity = termo_c.humidity
+                stat = TermocontStatistic.objects.create(device=termo_c, temp=termo_c.temp, humidity=termo_c.humidity)
                 stat.save()
                 return
             answer = 'HashCheckError'
@@ -222,6 +220,8 @@ class Client:
         if created:
             termo_firmware.save()
         termo_c = Termocontroller.objects.create()
+        if 'string_id' in request and not Termocontroller.objects.filter(string_id=request['string_id']).exists():
+            termo_c.string_id = request['string_id']
         termo_c.model_name = termo_name
         termo_c.firmware_version = termo_firmware
         termo_c.target_temp = float(request['target_temp'])

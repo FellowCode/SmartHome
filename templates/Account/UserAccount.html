@@ -51,8 +51,11 @@
                                 <!--PC version-->
                                 <div data-id="{{ device.id }}" class="col s12 device no-padding hide-on-small-only">
                                     <div class="col s3">
-                                        <div class="col s12 settings">
+                                        <div class="col s6 settings">
                                             <a href="/device/settings/{{ device.id }}/"><i class="material-icons">settings</i></a>
+                                        </div>
+                                        <div class="col s6 settings">
+                                            <a href="/device/stat/{{ device.id }}/"><i class="material-icons">poll</i></a>
                                         </div>
                                         <div class="col s12 no-padding">
                                             <div class="switch">

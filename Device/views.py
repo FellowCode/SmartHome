@@ -1,17 +1,17 @@
-from datetime import datetime
+import datetime
 from django.contrib.auth import authenticate
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from .models import *
 from .forms import *
+import random
 
 
 def change_termo(requset):
     import SmartHome.utils as utils
     import SmartHome.views as main
     if requset.method == 'POST':
-        print(requset.POST)
         data = {}
         id = requset.POST['id']
         termo_c = Termocontroller.objects.get(id=id)
@@ -46,5 +46,16 @@ def settings(request, id):
                 return render(request, 'Device/Settings.html', {'form': form})
             form = SettingsForm(initial={'custom_name': termo_c.custom_name})
             return render(request, 'Device/Settings.html', {'form': form})
+        return redirect('/account/')
+    return redirect('/account/signin/')
+
+def statistic(request, id):
+    user = request.user
+
+    if user.is_authenticated:
+        termo_c = Termocontroller.objects.get(id=id)
+        if termo_c.user == user:
+            stat = TermocontStatistic.objects.filter(device=termo_c, date__gte=datetime.datetime.now()-datetime.timedelta(days=7)).order_by('date')
+            return render(request, 'Device/Statistic.html', {'stat': stat})
         return redirect('/account/')
     return redirect('/account/signin/')

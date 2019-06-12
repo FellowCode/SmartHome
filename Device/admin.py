@@ -8,3 +8,7 @@ class TermocontrollerAdmin(admin.ModelAdmin):
 @admin.register(TermocontrollerName)
 class TermocontrollerNameAdmin(admin.ModelAdmin):
     pass
+
+@admin.register(TermocontStatistic)
+class TermocontStatAdmin(admin.ModelAdmin):
+    readonly_fields = ['device', 'date', 'temp', 'humidity']

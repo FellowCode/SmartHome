@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}SmartHome: Вход{% endblock %}
+
+{% block stylesheet %}
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <form method="post">
+                {% csrf_token %}
+                <div class="col s12 m10 offset-m1 l8 offset-l2 xl4 offset-xl4 form z-depth-1 no-padding">
+                    <h4 class="title center-align dark-text-color">Статистика устройства</h4>
+                    <div class="row">
+                        <div class="col s10 offset-s1">
+                            <div id="curve_chart_temp" style="margin-bottom:50px; width: 100%; height: auto"></div>
+                            <div id="curve_chart_humidity" style="margin-bottom:50px; width: 100%; height: auto"></div>
+                            <ul id="statistic" style="display: none">
+                                {% for stat_elem in stat %}
+                                    <li data-temp="{{ stat_elem.temp }}" data-hum="{{ stat_elem.humidity }}">{{ stat_elem.date|date:"Y.m.d" }} {{ stat_elem.date|time:"H:i" }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="{% static 'js/stat.js' %}"></script>
+{% endblock %}
